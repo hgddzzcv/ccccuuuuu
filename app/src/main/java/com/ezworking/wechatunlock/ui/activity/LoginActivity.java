@@ -82,6 +82,7 @@ public class LoginActivity extends AppBaseActivity {
         lLayout.setLayoutParams(layoutParams);*/
         simpleDraweeView.setImageResource(R.drawable.icon_avatar);
         //将以上次登录保存的账号密码显示
+        //将以上次登录保存的账号密码显示
        // String savedAccount = AppCache.getInstance().getAccount();
        // mAccountEt.setText(savedAccount);
       //  mAccountEt.setSelection(savedAccount.length());
