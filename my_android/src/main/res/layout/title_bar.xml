@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:minHeight="45dp"
+    android:id="@+id/rl_title"
+    android:background="@color/maincolor">
+
+    <com.ezworking.my_android.base.view.ImageViewForClick
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/icon_back" />
+
+    <com.ezworking.my_android.base.view.TextViewForClick
+        android:id="@+id/tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large_16"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/img_back"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxWidth="300dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_tbb_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxWidth="300dp"
+        android:minWidth="150dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+   <!-- <com.bluemoon.washingSchool.view.CustomTimer
+        android:layout_alignRight="@id/tv_tbb_title"
+        android:layout_marginRight="110dp"
+        android:id="@+id/custom_timer"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+
+        />-->
+
+    <com.ezworking.my_android.base.view.TextViewForClick
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large_16"
+        android:visibility="gone"
+        />
+
+    <com.ezworking.my_android.base.view.ImageViewForClick
+        android:id="@+id/img_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scaleType="center"
+        android:visibility="gone"
+         />
+
+</RelativeLayout>

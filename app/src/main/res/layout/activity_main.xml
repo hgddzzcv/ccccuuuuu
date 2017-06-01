@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <include
+        layout="@layout/title_bar_main"/>
+
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:minHeight="45dp"
+            android:orientation="horizontal">
+
+
+            <RadioGroup
+                android:id="@+id/rg_exam"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_left"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/sourse_tab_selector"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="我的通讯录"
+                    android:textColor="@color/gray_buttom_text"
+                    android:textSize="@dimen/text_size_large_15"  />
+                <View
+                    android:layout_width="0px"
+                    android:layout_height="35dp"
+                    android:background="@color/gray_line"
+                    />
+
+                <RadioButton
+                    android:id="@+id/rb_right"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/sourse_tab_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="我的订单"
+                    android:textColor="@color/gray_buttom_text"
+                    android:textSize="@dimen/text_size_large_15" />
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_examStatus"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:layout_weight="1"></android.support.v4.view.ViewPager>
+-->
+
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+    </FrameLayout>
+
+
+
+
+
+    </LinearLayout>
+
+

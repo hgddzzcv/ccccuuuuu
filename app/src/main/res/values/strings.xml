@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">微信解锁</string>
+    <string name="home_left">我的通讯录</string>
+    <string name="home_right">我的订单</string>
+    <string name="main_title">首页</string>
+    <string name="contact_head">所有号码已经存入到本地通讯录，群组为“微信解锁\"</string>
+    <string name="wechat_text">微信：</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_footer_refreshing_label">正在拉取数据...</string>
+    <string name="pull_to_refresh_refreshing_label">努力加载中...</string>
+    <string name="pull_to_refresh_footer_release_label">松开后加载</string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="order_number">订单号:</string>
+    <string name="order_time">下单时间:</string>
+    <string name="help_phone">帮忙手机号:</string>
+    <string name="lock">解锁</string>
+    <string name="lose_effort">失效</string>
+    <string name="effort">接受</string>
+    <string name="accept">已接受</string>
+    <string name="refuse">已拒绝</string>
+    <string name="accout">请输入你的账号</string>
+    <string name="pwd">请输入你的密码</string>
+    <string name="pwd2">请输入密码</string>
+    <string name="no_accout1">没有账号?</string>
+    <string name="no_accout2">通过微信去注册吧</string>
+    <string name="phone">请输入手机号</string>
+    <string name="code">请输入验证码</string>
+    <string name="get_code">获取验证码</string>
+    <string name="nick_name">请输入昵称</string>
+    <string name="qq">请输入QQ</string>
+    <string name="wechat">请输入微信号</string>
+    <string name="id">请输入推荐人ID</string>
+    <string name="rate">请输入您要兑换的点数</string>
+    <string name="result">根据您输入的点数可兑换</string>
+</resources>

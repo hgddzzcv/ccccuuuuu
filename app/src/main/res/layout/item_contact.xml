@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:paddingLeft="@dimen/header_footer_top_bottom_padding"
+              android:paddingRight="@dimen/header_footer_top_bottom_padding"
+              android:paddingTop="3dp"
+              android:paddingBottom="2dp"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/contact_name"
+            android:layout_width="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:text="testContact0"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/contact_phone"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:paddingLeft="3dp"
+            android:text="(13622382905)"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingTop="2dp"
+        android:orientation="horizontal"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="@string/wechat_text"
+            android:textColor="@color/gray_buttom_text"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/contact_wechat"
+            android:text="wechat0"
+            android:paddingLeft="3dp"
+            android:textColor="@color/gray_buttom_text"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

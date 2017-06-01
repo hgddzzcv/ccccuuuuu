@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingTop="6dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="@string/order_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:id="@+id/order_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingTop="6dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center_vertical"
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:text="@string/order_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:gravity="center_vertical"
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:id="@+id/order_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:text="@string/help_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textColor="@color/gray_buttom_text"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:id="@+id/help_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/order_state"
+        android:textSize="14sp"
+        android:text="失效"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_width="65dp"
+        android:layout_height="36dp"/>
+
+
+
+</LinearLayout>

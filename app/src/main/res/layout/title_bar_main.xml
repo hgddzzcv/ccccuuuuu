@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:minHeight="60dp"
+    android:id="@+id/rl_title"
+    android:background="@color/maincolor">
+
+    <!--fresco:roundingBorderWidth="1dp"-->
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:id="@+id/img_back"-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:clickable="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="12dp"-->
+        <!--fresco:actualImageScaleType="centerCrop"-->
+        <!--fresco:placeholderImage="@drawable/account"-->
+        <!--fresco:placeholderImageScaleType="centerCrop"-->
+        <!--fresco:failureImage="@drawable/account"-->
+        <!--fresco:failureImageScaleType="centerCrop"-->
+        <!--fresco:roundAsCircle="true"-->
+        <!--fresco:roundingBorderColor="#6acfff"-->
+        <!--fresco:roundingBorderWidth="1dp"-->
+        <!--/>-->
+    <ImageView
+
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    
+
+    <com.ezworking.my_android.base.view.TextViewForClick
+        android:id="@+id/tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingRight="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large_16"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_tbb_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxWidth="300dp"
+        android:minWidth="150dp"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <com.ezworking.my_android.base.view.TextViewForClick
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large_16"
+        android:visibility="gone"
+        />
+
+    <com.ezworking.my_android.base.view.ImageViewForClick
+        android:id="@+id/img_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="12dp"
+        android:scaleType="center"
+        android:src="@drawable/account"
+         />
+
+</RelativeLayout>

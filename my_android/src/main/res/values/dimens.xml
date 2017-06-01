@@ -1,0 +1,75 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="subtitle_minimum_font_size">13sp</dimen>
+
+
+    <dimen name="listview_default_height">100dp</dimen>
+
+
+    <dimen name="text_size_large_8">8sp</dimen>
+    <dimen name="text_size_large_9">9sp</dimen>
+    <dimen name="text_size_large_10">10sp</dimen>
+    <dimen name="text_size_large_11">11sp</dimen>
+    <dimen name="text_size_large_12">12sp</dimen>
+    <dimen name="text_size_large_13">13sp</dimen>
+    <dimen name="text_size_large_14">14sp</dimen>
+    <dimen name="text_size_large_15">15sp</dimen>
+    <dimen name="text_size_large_16">16sp</dimen>
+
+
+    <!--pulltorefresh-->
+    <dimen name="indicator_internal_padding">4dp</dimen>
+    <dimen name="indicator_right_padding">10dp</dimen>
+    <dimen name="indicator_corner_radius">12dp</dimen>
+    <dimen name="header_footer_left_right_padding">54dp</dimen>
+    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
+
+    <dimen name="actionbar_height">45dp</dimen>
+    <dimen name="profile_head_userinfo_view_height">70dp</dimen>
+    <dimen name="profile_head_userinfo_view_width">70dp</dimen>
+    <dimen name="profile_head_login_view_height">40dp</dimen>
+    <dimen name="profile_head_login_view_width">40dp</dimen>
+    <dimen name="profile_head_account_view_height">90dp</dimen>
+    <dimen name="profile_head_account_view_width">90dp</dimen>
+    <dimen name="profile_head__width">95dp</dimen>
+    <dimen name="profile_head_background_account_view_height">84dp</dimen>
+    <dimen name="profile_head_background_account_view_width">84dp</dimen>
+    <dimen name="account_order_home_icon_width">30sp</dimen>
+    <dimen name="account_order_home_icon_height">30sp</dimen>
+    <dimen name="point_padding_left">2dp</dimen>
+    <dimen name="point_padding_right">2dp</dimen>
+
+    <!-- custom_dialog -->
+    <dimen name="dialogBase_width">310.0dip</dimen>
+    <dimen name="dialogBase_titleHeight">48.0dip</dimen>
+    <dimen name="dialogBase_titleIconMargin">12.0dip</dimen>
+    <dimen name="dialogBase_content_margin">12.0dip</dimen>
+    <dimen name="dialogBase_message_paddingTop">5.0dip</dimen>
+    <dimen name="dialogBase_message_paddingLeft">2.0dip</dimen>
+    <dimen name="dialogBase_message_paddingRight">2.0dip</dimen>
+    <dimen name="dialogBase_message_lineSpacing">5.0dip</dimen>
+    <dimen name="dialogBase_button_marginTop">2.0dip</dimen>
+    <dimen name="dialogBase_listWidth">254.0dip</dimen>
+    <dimen name="dialogBase_btnWidth">135.0dip</dimen>
+    <dimen name="dialogBase_btnHeight">44.0dip</dimen>
+    <dimen name="dialogBase_btnArea_marginLeft">10.0dip</dimen>
+    <dimen name="dialogBase_btnArea_marginRight">10.0dip</dimen>
+    <dimen name="dialogBase_btnArea_marginTop">20.0dip</dimen>
+    <dimen name="dialogBase_divider_width">1.0px</dimen>
+    <dimen name="dialogBase_title_marginTop">15.0dip</dimen>
+    <dimen name="dialogBase_title_marginLeft">15.0dip</dimen>
+    <dimen name="dialogBase_title_marginRight">15.0dip</dimen>
+    <dimen name="dialogBase_body_marginTop">20.0dip</dimen>
+    <dimen name="dialogBase_body_marginLeft">15.0dip</dimen>
+    <dimen name="dialogBase_body_marginRight">15.0dip</dimen>
+    <dimen name="dialogBase_body_marginBottom">20.0dip</dimen>
+    <dimen name="font_size_middle">18.0sp</dimen>
+    <dimen name="textSize20sp">20.0sp</dimen>
+
+    <dimen name="course_play_icon_margin">80dp</dimen>
+
+
+</resources>

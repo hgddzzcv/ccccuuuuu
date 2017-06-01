@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="maincolor">#F6F7FB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="red">#ff0000</color>
+    <color name="red1">#ef0000</color> <!--分数低于60,错题,倒计时颜色-->
+    <color name="gray_buttom_text">#888888</color>
+    <color name="gray_line">#e7e7e7</color>
+    <color name="gray_background">#f0f0f0</color>
+    <color name="dialog_gray">#34000000</color>
+    <color name="dialog_gray1">#66000000</color>
+
+    <color name="black_text3">#333333</color><!-- 主体标题文字颜色-黑色-->
+    <color name="black_main_text2">#222222</color><!-- 主体标题文字颜色-黑色2-->
+    <color name="page_bg_f2">#f2f2f2</color> <!-- 页面带灰色背景 -->
+
+
+    <!--ijkplayer-->
+    <color name="cl_default">#424242</color>
+    <color name="cl_error">#ffffff</color>
+
+    <color name="main_bottom_btn">#F7ED3B17</color>
+    <color name="main_bottom_btn_press">#F7ED3B17</color>
+</resources>

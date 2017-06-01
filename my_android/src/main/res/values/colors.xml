@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="maincolor">#F6F7FB</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="orage">#EB592A</color>
+    <color name="gray_buttom_text">#888888</color>
+    <color name="gray_line">#e7e7e7</color>
+    <color name="gray_background">#f0f0f0</color>
+
+    <color name="black_text3">#333333</color><!-- 主体标题文字颜色-黑色-->
+    <color name="black_main_text2">#222222</color><!-- 主体标题文字颜色-黑色2-->
+    <color name="page_bg_f2">#f2f2f2</color> <!-- 页面带灰色背景 -->
+
+    <color name="datepick_dialog_bg">#00000000</color>
+
+
+    <!--ijkplayer-->
+    <color name="colorAccent">#FF4081</color>
+    <color name="cl_default">#424242</color>
+    <color name="cl_error">#ffffff</color>
+
+    <!--首页色块 -->
+    <color name="home_color_block0">#0dbb6b</color>
+    <color name="home_color_block1">#338bed</color>
+    <color name="home_color_block2">#69be04</color>
+    <color name="home_color_block3">#fd4381</color>
+    <color name="home_color_block4">#9499fd</color>
+    <color name="home_color_block5">#3aa2fa</color>
+    <color name="home_color_block6">#e4d100</color>
+    <color name="home_color_block7">#ff8b74</color>
+
+    <!--时间选择器 -->
+    <color name="province_line_border">#D0D0D0</color>
+    <color name="login_button_normal">#169fff</color>
+    <color name="login_button_pressed">#1073b9</color>
+</resources>

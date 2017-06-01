@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background"
+    tools:context="com.ezworking.wechatunlock.ui.activity.ExchangeMoneyActivity">
+    <include layout="@layout/title_bar"/>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp">
+
+
+            <EditText
+                android:inputType="number"
+                android:id="@+id/rate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:hint="@string/rate"
+                android:textColor="@color/black"
+                android:textColorHint="@color/gray_buttom_text"
+                android:textCursorDrawable="@null"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:singleLine="true"/>
+
+            <TextView
+                android:text=""
+                android:id="@+id/point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="2dp"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:textColor="@color/black_main_text2"
+        android:paddingTop="20dp"
+        android:paddingLeft="2dp"
+        android:text="@string/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       />
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <TextView
+            android:id="@+id/tv_like1"
+            android:gravity="center"
+            android:text=""
+            android:textSize="25sp"
+            android:textColor="#f7980a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_like2"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="元"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/exchange"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_btn_bg_selector"
+        android:gravity="center"
+        android:text="兑换"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        style="@style/myBtn"/>
+
+</LinearLayout>
