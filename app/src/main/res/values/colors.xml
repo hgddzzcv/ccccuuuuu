@@ -12,6 +12,7 @@
     <color name="gray_line">#e7e7e7</color>
     <color name="gray_background">#f0f0f0</color>
     <color name="dialog_gray">#34000000</color>
+    <color name="dialog_gray2">#cecece</color>
     <color name="dialog_gray1">#66000000</color>
 
     <color name="black_text3">#333333</color><!-- 主体标题文字颜色-黑色-->
@@ -25,4 +26,6 @@
 
     <color name="main_bottom_btn">#F7ED3B17</color>
     <color name="main_bottom_btn_press">#F7ED3B17</color>
+    <color name="main_bottom_btn_press1">#1fb8ff</color>
+    <color name="main_bottom_btn_press2">#010101</color>
 </resources>

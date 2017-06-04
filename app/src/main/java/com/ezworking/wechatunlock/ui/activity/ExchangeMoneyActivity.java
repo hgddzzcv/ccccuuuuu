@@ -179,7 +179,7 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
         customBuilder.setTitle("兑换成功");
         customBuilder.setMessage(message);
         customBuilder.setGravity(Gravity.CENTER);
-        customBuilder.setPositiveButtonTextColor(aty.getResources().getColor(R.color.maincolor));
+        customBuilder.setPositiveButtonTextColor(aty.getResources().getColor(R.color.main_bottom_btn_press1));
         customBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

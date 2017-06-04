@@ -78,10 +78,10 @@
             android:textColor="@color/maincolor"
             android:textSize="@dimen/font_size_middle" />
 
-        <View
-            android:layout_width="@dimen/dialogBase_divider_width"
-            android:layout_height="fill_parent"
-            android:background="@color/dialog_gray" />
+        <!--<View-->
+            <!--android:layout_width="@dimen/dialogBase_divider_width"-->
+            <!--android:layout_height="80%p"-->
+            <!--android:background="@color/dialog_gray" />-->
 
         <TextView
             android:id="@+id/dialogRightBtn"
