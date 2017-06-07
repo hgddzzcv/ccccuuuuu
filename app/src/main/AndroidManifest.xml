@@ -115,12 +115,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop"
+            />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.MyinfoActivity" />
         <activity android:name=".ui.activity.ExchangeLikeActivity" />
         <activity android:name=".ui.activity.ExchangeMoneyActivity"></activity>
+        <activity android:name=".ui.activity.ForgotPwdActivity"/>
     </application>
 
 </manifest>

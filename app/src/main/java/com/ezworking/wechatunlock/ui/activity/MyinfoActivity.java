@@ -15,6 +15,7 @@ import com.ezworking.my_android.base.view.LoadingDialog;
 import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.api.ConstantNetUrl;
 import com.ezworking.wechatunlock.api.RequestApi;
+import com.ezworking.wechatunlock.application.AppCache;
 import com.ezworking.wechatunlock.domain.ExchangeRataBean;
 import com.ezworking.wechatunlock.domain.MyinfoBean;
 import com.ezworking.wechatunlock.ui.AppBaseActivity;
@@ -78,12 +79,14 @@ public class MyinfoActivity extends AppBaseActivity {
 
     }
     private void initCustomActionBar() {
-        CommonActionBar commonActionBar =
+        final CommonActionBar commonActionBar =
                 new CommonActionBar(aty,
                         new CommonActionBar.IActionBarListener() {
                             @Override
                             public void onBtnRight(View v) {
-
+                                AppCache.getInstance().setUserLogin(false);
+                                PageJumps.PageJumps(aty,LoginActivity.class,null);
+                                finish();
                             }
 
                             @Override
@@ -100,7 +103,10 @@ public class MyinfoActivity extends AppBaseActivity {
         TextView tvTitle
                 = commonActionBar.getTitleView();
         commonActionBar.setImgLeftViewVisibility(View.VISIBLE);
-        commonActionBar.setimgRightViewVisibility(View.VISIBLE);
+        commonActionBar.settvRightViewVisibility(View.VISIBLE);
+        TextView tvRightView = commonActionBar.getTvRightView();
+        tvRightView.setText("注销");
+        tvRightView.setTextColor(getResources().getColor(R.color.main_bottom_btn_press));
     }
 
          void getData(){
@@ -189,7 +195,7 @@ public class MyinfoActivity extends AppBaseActivity {
 
     private void showLoading(String msg) {
         mLoadDialog = new LoadingDialog(msg);
-        //mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
+        mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
     }
 
     private void dismissLoading() {

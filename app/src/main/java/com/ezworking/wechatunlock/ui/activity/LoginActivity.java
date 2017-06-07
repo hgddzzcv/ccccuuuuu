@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dou361.statusbar.StatusBarUtil;
+import com.ezworking.my_android.base.BaseApplication;
 import com.ezworking.my_android.base.utils.AsyncHttpClientUtil;
 import com.ezworking.my_android.base.utils.CommonActionBar;
 import com.ezworking.my_android.base.utils.LogUtil;
@@ -49,6 +50,9 @@ public class LoginActivity extends AppBaseActivity {
 
     @Bind(R.id.no_accout)
     TextView noAccount;
+
+    @Bind(R.id.tv_forgot)
+    TextView forgot;
 
     private LoadingDialog mLoadDialog;
     private long exitTime = 0;
@@ -126,6 +130,13 @@ public class LoginActivity extends AppBaseActivity {
 
             PageJumps.PageJumps(aty,RegisterActivity.class,null);
 
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PageJumps.PageJumps(aty,ForgotPwdActivity.class,null);
             }
         });
 
@@ -253,18 +264,12 @@ public class LoginActivity extends AppBaseActivity {
                         new CommonActionBar.IActionBarListener() {
                             @Override
                             public void onBtnRight(View v) {
+
                             }
 
                             @Override
                             public void onBtnLeft(View v) {
-                                if ((System.currentTimeMillis() - exitTime) > 2000) {
-                                    ToastUtil.showToast(aty, "再按一次退出程序");
-                                    exitTime = System.currentTimeMillis();
-                                } else {
-                                    finish();
-                                    Process.killProcess(Process.myPid());
-                                    System.exit(0);
-                                }
+
                             }
 
                             @Override
@@ -275,7 +280,7 @@ public class LoginActivity extends AppBaseActivity {
                         });
         TextView tvTitle
                 = commonActionBar.getTitleView();
-        commonActionBar.setImgLeftViewVisibility(View.VISIBLE);
+        commonActionBar.setImgLeftViewVisibility(View.GONE);
         commonActionBar.setimgRightViewVisibility(View.GONE);
     }
 
@@ -293,7 +298,8 @@ public class LoginActivity extends AppBaseActivity {
                 //SharePreferenceUtils.clearValueFromSP(context, Constant.USER_TOKEN);
                 finish();
                 Process.killProcess(Process.myPid());
-                System.exit(0);
+               // System.exit(0);
+                BaseApplication.getInst().exit();
             }
             return true;
         }

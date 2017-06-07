@@ -5,14 +5,10 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ezworking.my_android.base.utils.AsyncHttpClientUtil;
@@ -26,8 +22,6 @@ import com.ezworking.my_android.base.view.LoadingDialog;
 import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.api.ConstantNetUrl;
 import com.ezworking.wechatunlock.api.RequestApi;
-import com.ezworking.wechatunlock.application.AppCache;
-import com.ezworking.wechatunlock.domain.RegsiterInfoBean;
 import com.ezworking.wechatunlock.domain.ResultBean;
 import com.ezworking.wechatunlock.domain.UserInfoBean;
 import com.ezworking.wechatunlock.ui.AppBaseActivity;
@@ -45,12 +39,12 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import cz.msebera.android.httpclient.Header;
 
-public class RegisterActivity extends AppBaseActivity {
-    @Bind(R.id.resiger)
-    Button mRegiser;
-
-    @Bind(R.id.lLayout)
-    LinearLayout lLayout;
+/**
+ * Created by sxj on 2017/6/4.
+ */
+public class ForgotPwdActivity extends AppBaseActivity {
+    @Bind(R.id.confirm)
+    Button mConfirm;
 
     @Bind(R.id.iv_avatar)
     public SimpleDraweeView simpleDraweeView;
@@ -64,23 +58,10 @@ public class RegisterActivity extends AppBaseActivity {
     @Bind(R.id.get_code)
     Button mGetCode;
 
-    @Bind(R.id.nick_name)
-    EditText mNickName;
-
-    @Bind(R.id.qq)
-    EditText mQQ;
-
-    @Bind(R.id.wechat)
-    EditText mWeChat;
-
-    @Bind(R.id.referrer_id)
-    EditText mReferrerId;
 
     @Bind(R.id.pwd)
     EditText mPwd;
 
-    @Bind(R.id.show_code_ib)
-    ImageButton mShowCodeIb;
 
     private LoadingDialog mLoadDialog;
     private Timer timer;
@@ -88,35 +69,26 @@ public class RegisterActivity extends AppBaseActivity {
     private TimerTask timerTask;
     private String phoneNum;
     private String Code;
-    private String Nick;
-    private String QQ;
-    private String weChat;
-    private String referrerID;
     private String pwd;
 
-    private Boolean isShow = false;
 
     private ResultBean resultbean;
-    private RegsiterInfoBean regsiterInfoBean;
+    private UserInfoBean userInfoBean;
     private ResultBean result;
 
 
     @Override
     public void setRootView() {
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_forgot);
     }
 
     @Override
     public void initData() {
         initCustomActionBar();
-        mRegiser.setAlpha(0.4f);
-        mRegiser.setEnabled(false);
+        mConfirm.setAlpha(0.4f);
+        mConfirm.setEnabled(false);
         checkEditText(mPhoneNum);
         checkEditText(mCode);
-        checkEditText(mNickName);
-        checkEditText(mQQ);
-        checkEditText(mWeChat);
-        checkEditText(mReferrerId);
         checkEditText(mPwd);
        /* WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -125,8 +97,6 @@ public class RegisterActivity extends AppBaseActivity {
         lLayout.setLayoutParams(layoutParams);*/
         simpleDraweeView.setImageResource(R.drawable.icon_avatar);
 
-        mRegiser.setEnabled(false);
-        mRegiser.setAlpha(0.4f);
         mGetCode.setEnabled(false);
         mGetCode.setAlpha(0.4f);
     }
@@ -158,7 +128,7 @@ public class RegisterActivity extends AppBaseActivity {
     };
     @Override
     public void initListener() {
-        mRegiser.setOnClickListener(new View.OnClickListener() {
+        mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getData();
@@ -173,21 +143,7 @@ public class RegisterActivity extends AppBaseActivity {
             }
         });
 
-        mShowCodeIb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isShow){
-                    mPwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    isShow = true;
-                    mShowCodeIb.setImageResource(R.drawable.icon_pwd_open);
-                }else{
-                    mPwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    isShow = false;
-                    mShowCodeIb.setImageResource(R.drawable.icon_pwd_close);
-                }
-                mPwd.setSelection(mPwd.getText().length());
-            }
-        });
+
     }
 
 
@@ -207,10 +163,6 @@ public class RegisterActivity extends AppBaseActivity {
             public void afterTextChanged(Editable s) {
                 phoneNum = mPhoneNum.getText().toString().trim();
                 Code = mCode.getText().toString().trim();
-                Nick = mNickName.getText().toString().trim();
-                QQ = mQQ.getText().toString().trim();
-                weChat = mWeChat.getText().toString().trim();
-                referrerID = mReferrerId.getText().toString().trim();
                 pwd = mPwd.getText().toString().trim();
 
                 if (time==30&&phoneNum.length()==11){
@@ -230,14 +182,12 @@ public class RegisterActivity extends AppBaseActivity {
 
 
     private void checkInputContent() {
-        if (!TextUtils.isEmpty(phoneNum) && !TextUtils.isEmpty(Code) && !TextUtils.isEmpty(Nick) && !TextUtils.isEmpty(QQ)
-                && !TextUtils.isEmpty(QQ)&& !TextUtils.isEmpty(weChat)&& !TextUtils.isEmpty(referrerID)
-                && !TextUtils.isEmpty(pwd)&& pwd.length()>=6) {
-            mRegiser.setEnabled(true);
-            mRegiser.setAlpha(1.0f);
+        if (!TextUtils.isEmpty(phoneNum) && !TextUtils.isEmpty(Code) && !TextUtils.isEmpty(pwd)&& pwd.length()>=6) {
+            mConfirm.setEnabled(true);
+            mConfirm.setAlpha(1.0f);
         } else {
-            mRegiser.setEnabled(false);
-            mRegiser.setAlpha(0.4f);
+            mConfirm.setEnabled(false);
+            mConfirm.setAlpha(0.4f);
         }
     }
     private void showLoading(String msg) {
@@ -259,7 +209,7 @@ public class RegisterActivity extends AppBaseActivity {
             jsonObject.put("key", signStr);
             jsonObject.put("token", token);
             jsonObject.put("phone", phoneNum);
-            jsonObject.put("type","1");
+            jsonObject.put("type","2");
             RequestApi.jsonPost(aty, ConstantNetUrl.SENDCODE, jsonObject, new AsyncHttpResponseHandler() {
 
                 @Override
@@ -320,18 +270,13 @@ public class RegisterActivity extends AppBaseActivity {
 
 
         try {
-          //  String md5Pwd = MD5.getMessageDigest(pwd.getBytes());
-          //  LogUtil.e("md5Pwd--------" + md5Pwd);
+            //  String md5Pwd = MD5.getMessageDigest(pwd.getBytes());
+            //  LogUtil.e("md5Pwd--------" + md5Pwd);
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userName", Nick);
-            jsonObject.put("name", Nick);
             jsonObject.put("pwd", pwd);
             jsonObject.put("phone", phoneNum);
             jsonObject.put("verifyCode", Code);
-            jsonObject.put("wechat", weChat);
-            jsonObject.put("qq", QQ);
-            jsonObject.put("referrerID", referrerID);
-            RequestApi.jsonPost(aty, ConstantNetUrl.REGISTER, jsonObject, new AsyncHttpResponseHandler() {
+            RequestApi.jsonPost(aty, ConstantNetUrl.UPDATEPWD, jsonObject, new AsyncHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     showLoading("");
@@ -348,33 +293,28 @@ public class RegisterActivity extends AppBaseActivity {
                     try {
                         response = new String(responseBody, "utf-8");
                         try{
-                             regsiterInfoBean = new Gson().fromJson(response, RegsiterInfoBean.class);
+                            userInfoBean = new Gson().fromJson(response, UserInfoBean.class);
                         }catch (Exception e){
                             result =  new Gson().fromJson(response,ResultBean.class);
                             //deal wrong
                             ToastUtil.showToast(aty, result.getErrorMsg());
                             return;
                         }
-                        LogUtil.e(regsiterInfoBean.success+"2");
-                        if (regsiterInfoBean.success.equals("0")) {
-                            ToastUtil.showToast(aty, regsiterInfoBean.getErrorMsg());
+                        LogUtil.e(userInfoBean.success+"2");
+                        if (userInfoBean.success.equals("0")) {
+                            ToastUtil.showToast(aty, userInfoBean.getErrorMsg());
                             return;
                         }
 
 
-                        //注册成功
-                        ToastUtil.showToast(aty, "注册成功");
-                        UserInfoBean userInfoBean = new UserInfoBean();
-                        userInfoBean.data.setUserToken(regsiterInfoBean.getUserToken());
-                        userInfoBean.data.setName(Nick);
-                        userInfoBean.data.setPhone(phoneNum);
-                        userInfoBean.data.setQq(QQ);
-                        userInfoBean.data.setWechat(weChat);
-                        userInfoBean.data.setPoints("");
-                        AppCache.getInstance().saveUserInfo(userInfoBean);
-                        AppCache.getInstance().setUserLogin(true);
-                        AppCache.getInstance().setPassword(pwd);
-                        PageJumps.PageJumps(aty,MainActivity.class,null);
+                        //修改成功
+                        ToastUtil.showToast(aty, "密码已重置!");
+                        // UserInfoBean userInfoBean = new UserInfoBean();
+                      //   userInfoBean.data.setUserToken(regsiterInfoBean.getUserToken());
+                        // AppCache.getInstance().saveUserInfo(userInfoBean);
+                        //  AppCache.getInstance().setUserLogin(true);
+                        //  AppCache.getInstance().setPassword(pwd);
+                        PageJumps.PageJumps(aty,LoginActivity.class,null);
                         finish();
 
                     } catch (Exception e) {
@@ -408,14 +348,14 @@ public class RegisterActivity extends AppBaseActivity {
                             public void onBtnLeft(View v) {
                                 if(timer!=null){
                                     timer.cancel();
-                                  timer = null;
+                                    timer = null;
                                 }
                                 finish();
                             }
 
                             @Override
                             public void setTitle(TextView v) {
-                                v.setText("注册");
+                                v.setText("修改密码");
                                 v.setTextColor(getResources().getColor(R.color.black_text3));
                             }
                         });

@@ -1,7 +1,7 @@
 package com.ezworking.wechatunlock.domain;
 
 /**
- * Created by dujiande 2016/12/16
+ * Created by sxj 2017/05/16
  * 个人信息结构
  */
 public class UserInfoBean extends ResultBean{
@@ -15,6 +15,7 @@ public class UserInfoBean extends ResultBean{
         public String phone;
         public String wechat;
         public String points;
+        public String qq;
         public String userToken;
 
         public String getName() {
@@ -55,6 +56,26 @@ public class UserInfoBean extends ResultBean{
 
         public void setPhone(String phone) {
             this.phone = phone;
+        }
+
+        public String getQq() {
+            return qq;
+        }
+
+        public void setQq(String qq) {
+            this.qq = qq;
+        }
+
+        @Override
+        public String toString() {
+            return "DataBean{" +
+                    "name='" + name + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", wechat='" + wechat + '\'' +
+                    ", points='" + points + '\'' +
+                    ", qq='" + qq + '\'' +
+                    ", userToken='" + userToken + '\'' +
+                    '}';
         }
     }
 

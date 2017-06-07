@@ -149,7 +149,8 @@
             android:textSize="18sp"
             style="@style/myBtn"/>
         <LinearLayout
-            android:layout_marginTop="5dp"
+            android:id="@+id/ll_layout"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_below="@+id/btn_login"
             android:layout_alignParentRight="true"
@@ -168,6 +169,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <TextView
+            android:clickable="true"
+            android:id="@+id/tv_forgot"
+            android:paddingTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:text="@string/forgot"
+            android:layout_below="@+id/ll_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
 
     </RelativeLayout>
 

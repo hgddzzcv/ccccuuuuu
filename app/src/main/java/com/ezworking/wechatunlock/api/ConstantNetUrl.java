@@ -70,4 +70,11 @@ public class ConstantNetUrl {
 
     public static final String UNLOCKPHONE = BaseUrl + "task/unlockPhone";
 
+
+    /**
+     * 修改密码
+     */
+
+    public static final String UPDATEPWD = BaseUrl + "user/updatePwd";
+
 }

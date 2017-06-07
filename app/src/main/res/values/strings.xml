@@ -22,6 +22,7 @@
     <string name="accout">请输入你的账号</string>
     <string name="pwd">请输入你的密码</string>
     <string name="pwd2">请输入密码</string>
+    <string name="forgot">忘记密码?</string>
     <string name="no_accout1">没有账号?</string>
     <string name="no_accout2">通过微信去注册吧</string>
     <string name="phone">请输入手机号</string>

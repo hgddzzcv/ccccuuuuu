@@ -1,16 +1,21 @@
 package com.ezworking.wechatunlock.ui.activity;
 
+import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.ezworking.my_android.base.BaseActivity;
+import com.ezworking.my_android.base.BaseApplication;
 import com.ezworking.my_android.base.utils.CommonActionBar;
 import com.ezworking.my_android.base.utils.PageJumps;
+import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.application.AppCache;
 import com.ezworking.wechatunlock.domain.UserInfoBean;
@@ -79,9 +84,6 @@ public class MainActivity extends AppBaseActivity{
                             public void setTitle(TextView v) {
                                 // TODO Auto-generated method stub
 
-                                v.setText("首页");
-                                v.setTextColor(getResources().getColor(R.color.black_text3));
-
 
                                 v.setText("首页");
                                 v.setTextColor(getResources().getColor(R.color.black_text3));
@@ -93,5 +95,25 @@ public class MainActivity extends AppBaseActivity{
         rl_title = (RelativeLayout) findViewById(R.id.rl_title);
         UserInfoBean mUserInfo = AppCache.getInstance().getUserInfo();
         //2017.5.10  avatarSdv.setImageURI(Uri.parse(mUserInfo.getuAvatar()));
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                ToastUtil.showToast(aty, "再按一次退出洗涤学院");
+
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                Process.killProcess(Process.myPid());
+              //  System.exit(0);
+                BaseApplication.getInst().exit();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

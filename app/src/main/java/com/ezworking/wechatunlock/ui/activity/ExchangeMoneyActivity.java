@@ -164,7 +164,7 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
 
     private void showLoading(String msg) {
         mLoadDialog = new LoadingDialog(msg);
-       // mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
+        mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
     }
 
     private void dismissLoading() {
