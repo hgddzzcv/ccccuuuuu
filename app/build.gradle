@@ -17,11 +17,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+
+
 }
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.0.0'
+    }
+}
+
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(':my_android')
     compile files('src/main/jniLibs/pushservice-5.7.0.95.jar')
+    compile 'org.greenrobot:greendao:3.0.1'
+    compile 'com.android.support:appcompat-v7:23+'
+}
+
+apply plugin: 'org.greenrobot.greendao'
+
+greendao {
+    targetGenDir 'src/main/java'
 }

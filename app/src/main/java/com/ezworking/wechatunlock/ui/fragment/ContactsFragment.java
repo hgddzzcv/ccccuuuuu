@@ -12,9 +12,11 @@ import com.ezworking.my_android.base.BaseFragment;
 import com.ezworking.my_android.base.utils.AsyncHttpClientUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
 import com.ezworking.wechatunlock.R;
+import com.ezworking.wechatunlock.adapter.ContactLvAdapter;
 import com.ezworking.wechatunlock.api.ConstantNetUrl;
 import com.ezworking.wechatunlock.api.RequestApi;
 import com.ezworking.wechatunlock.domain.ContactResult;
+import com.ezworking.wechatunlock.greendao.DBManager;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -48,6 +50,7 @@ public class ContactsFragment extends BaseFragment {
     private LoadingDialog mLoadDialog;
 
     private List<ContactResult> contacts = new ArrayList<>();
+    private ContactLvAdapter adapter;
 
     @Override
     public int setRootView() {
@@ -56,6 +59,14 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        adapter = new ContactLvAdapter(getActivity(),contacts);
+        lvContact.setAdapter(adapter);
+        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList();
+        if(contactResults != null && contactResults.size() != 0){
+            contacts.addAll(contactResults);
+            adapter.notifyDataSetChanged();
+
+        }
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +77,8 @@ public class ContactsFragment extends BaseFragment {
         });
     }
 
-
-
     public  void getContacs(){
-        final  List<ContactResult> contacts = new ArrayList<>();
+        final  List<ContactResult> contacts1 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         RequestApi.jsonPost(getActivity(), ConstantNetUrl.DOWNLOADCONTACTS, jsonObject, new AsyncHttpResponseHandler() {
 
@@ -86,13 +95,7 @@ public class ContactsFragment extends BaseFragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
-//                    String json = "{\"errorCode\":\"0\",\"data\":[{\n" +
-//                            "\"name\":\"张三\",\n" +
-//                            "\"phone\":\"13xxxxxxx\",\n" +
-//                            "\"wechat\":\"sdffs\"\n" +
-//                            "}]}";
                     String response = new String(responseBody, "utf-8");
-                    //ContactResult contactResult = new Gson().fromJson(json, ContactResult.class);
                     JSONObject json1 = new JSONObject(response);
                     Log.e("111","json1" + json1.toString());
                     String data = json1.optString("data");
@@ -107,42 +110,28 @@ public class ContactsFragment extends BaseFragment {
 
                             String name = jsonObject1.optString("name");
                             String phone = jsonObject1.optString("phone");
-                        String  wechat = jsonObject1.optString("wechat");
+                            String  wechat = jsonObject1.optString("wechat");
+                            String  identifier = jsonObject1.optString("identifier");
                             Log.e("111",name.toString() + phone.toString() + wechat.toString());
-                        ContactResult result = new ContactResult();
-                        result.name = name;
-                        result.phone = phone;
-                        result.wechat = wechat;
-                        contacts.add(result);
-                        //addContactToGroup(ID_WECHAT_GROUP,？);
+                            ContactResult result = new ContactResult();
+                            result.name = name;
+                            result.phone = phone;
+                            result.wechat = wechat;
+                            result.identifier = identifier;
+                            contacts1.add(result);
+
+
+
+                            //保存在本地群组
+                            addContactToGroup(Integer.parseInt(identifier),ID_WECHAT_GROUP);
+
+                            //保存数据到数据库
+                            DBManager.getInstance(getActivity()).insertContact(result);
 
                     }
-
-
-
-
-
-
-
-
-//                    String points = json1.optString("points");
-//                    String data = json1.optString("data");
-//                    JSONArray array = new JSONArray(data);
-//                    Log.e("111","array" + array);
-//                    Log.e("111","points" + points);
-//                    if (contactResult.success.equals("0")) {
-//                        Log.e("111","111" +contactResult.getErrorMsg());
-//                        ToastUtil.showToast(getActivity(), contactResult.getErrorMsg());
-//                        return;
-//                    }
-//
-//                    Log.e("111","contactResult" + contactResult.toString());
-//
-//                    if (contactResult!=null){
-//                        Log.e("111","contactResult" + contactResult.data);
-//                        //contacts.addAll(contactResult.data);
-//                        ToastUtil.showToast(getActivity(),"下载成功");
-//                    }
+                    contacts.clear();
+                    contacts.addAll(contacts1);
+                    adapter.notifyDataSetChanged();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -155,17 +144,6 @@ public class ContactsFragment extends BaseFragment {
                 AsyncHttpClientUtil.onFailure(getActivity(), statusCode);
             }
         });
-
-
-    }
-
-
-    /**
-     * 查询联系人id
-     */
-
-    public long getContactId(){
-        return 0;
     }
 
 
@@ -184,7 +162,7 @@ public class ContactsFragment extends BaseFragment {
      * @param contactId
      * @param groupId
      */
-    private void addContactToGroup(int contactId,int groupId) {
+    private void addContactToGroup(int contactId,long groupId) {
         //judge whether the contact has been in the group
         boolean b1 = ifExistContactInGroup(contactId, groupId);
         if (b1) {
@@ -204,9 +182,9 @@ public class ContactsFragment extends BaseFragment {
      * 群组中是否存在该联系人
      * @param contactId
      * @param groupId
-     * @return
+     * @returns
      */
-    private boolean ifExistContactInGroup(int contactId, int groupId) {
+    private boolean ifExistContactInGroup(int contactId, long groupId) {
         String where = ContactsContract.Contacts.Data.MIMETYPE + " = '" + ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE
                 + "' AND " + ContactsContract.Contacts.Data.DATA1 + " = '" + groupId
                 + "' AND " + ContactsContract.Contacts.Data.RAW_CONTACT_ID + " = '" + contactId + "'";
@@ -220,26 +198,11 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
     }
 
-//    public  List<Contact> getContacs() {
-//        List<Contact> contacts = new ArrayList<>();
-//        contacts.add(new Contact("testContact0","13537766590","wechat0"));
-//        contacts.add(new Contact("testContact1","13537766590","wechat1"));
-//        contacts.add(new Contact("testContact2","13537766590","wechat2"));
-//        contacts.add(new Contact("testContact3","13537766590","wechat3"));
-//        contacts.add(new Contact("testContact4","13537766590","wechat4"));
-//        contacts.add(new Contact("testContact5","13537766590","wechat5"));
-//        contacts.add(new Contact("testContact6","13537766590","wechat6"));
-//        contacts.add(new Contact("testContact7","13537766590","wechat7"));
-//        contacts.add(new Contact("testContact8","13537766590","wechat8"));
-//        return contacts;
-//    }
 
     private void showLoading(String msg) {
         mLoadDialog = new LoadingDialog(msg);
-        //mLoadDialog.show(getActivity().getFragmentManager(), LoadingDialog.TAG);
     }
 
     private void dismissLoading() {
