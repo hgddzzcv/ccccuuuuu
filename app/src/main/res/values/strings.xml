@@ -5,12 +5,6 @@
     <string name="main_title">首页</string>
     <string name="contact_head">所有号码已经存入到本地通讯录，群组为“微信解锁\"</string>
     <string name="wechat_text">微信：</string>
-    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
-    <string name="pull_to_refresh_pull_label">下拉刷新</string>
-    <string name="pull_to_refresh_footer_refreshing_label">正在拉取数据...</string>
-    <string name="pull_to_refresh_refreshing_label">努力加载中...</string>
-    <string name="pull_to_refresh_footer_release_label">松开后加载</string>
-    <string name="pull_to_refresh_release_label">松开后刷新</string>
     <string name="order_number">订单号:</string>
     <string name="order_time">下单时间:</string>
     <string name="help_phone">帮忙手机号:</string>
@@ -34,4 +28,10 @@
     <string name="id">请输入推荐人ID</string>
     <string name="rate">请输入您要兑换的点数</string>
     <string name="result">根据您输入的点数可兑换</string>
+
+    <string name="pull_to_refresh_pull_label">下拉刷新…</string>
+    <string name="pull_to_refresh_release_label">放开以刷新…</string>
+    <string name="pull_to_refresh_refreshing_label">正在载入…</string>
+
+
 </resources>

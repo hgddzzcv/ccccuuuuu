@@ -49,7 +49,17 @@ public class ContactResult extends ResultBean {
     public ContactResult() {
     }
 
-//    public String points;
+    @Override
+    public String toString() {
+        return "ContactResult{" +
+                "identifier='" + identifier + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", wechat='" + wechat + '\'' +
+                '}';
+    }
+
+    //    public String points;
 //    public List<DataDataBean> data;
 //
 //    public static class DataDataBean {

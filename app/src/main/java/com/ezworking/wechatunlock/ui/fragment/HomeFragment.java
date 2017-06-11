@@ -65,7 +65,7 @@ public class HomeFragment extends BaseFragment implements RadioGroup.OnCheckedCh
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    postContacts();
+                    //postContacts();
                     break;
             }
         }
@@ -116,32 +116,8 @@ public class HomeFragment extends BaseFragment implements RadioGroup.OnCheckedCh
         Log.e("111","nativeContacts" + nativeContacts.size());
 
         try {
-//            String array = "[\n" +
-//                    "{\n" +
-//                    "\"identifier\":\"65CA64F1-E036-467D-AB7F-1AB7EBC5D2C7\",\n" +
-//                    "\"name\":\"张三\",\n" +
-//                    "\" company \":\"xxxxxx\",\n" +
-//                    "\"phones\":[\"13xxxxxxx\", \"13xxxxxxx\",\"13xxxxxxx\"],\n" +
-//                    "\"emails\":[\"xxx@cccc\", \"xxx@cccc\",\"xxx@cccc\"]\n" +
-//                    "},\n" +
-//                    "{\n" +
-//                    "\"identifier\":\"65CA64F1-E036-467D-AB7F-1AB7EBC5D2C8\",\n" +
-//                    "\"name\":\"张三\",\n" +
-//                    "\" company \":\"xxxxxx\",\n" +
-//                    "\"phones\":[\"13xxxxxxx\", \"13xxxxxxx\",\"13xxxxxxx\"],\n" +
-//                    "\"emails\":[\"xxx@cccc\", \"xxx@cccc\",\"xxx@cccc\"]\n" +
-//                    "},\n" +
-//                    "{\"identifier\":\"65CA64F1-E036-467D-AB7F-1AB7EBC5D2C9\",\n" +
-//                    "\"name\":\"张三\",\n" +
-//                    "\" company \":\"xxxxxx\",\n" +
-//                    "\"phones\":[\"13xxxxxxx\", \"13xxxxxxx\",\"13xxxxxxx\"],\n" +
-//                    "\"emails\":[\"xxx@cccc\", \"xxx@cccc\",\"xxx@cccc\"]\n" +
-//                    "}\n" +
-//                    "]";
             JSONObject jsonObject = new JSONObject();
             JSONArray jsonArray = new JSONArray();
-
-
             for(NativeContact contact : nativeContacts){
 
                 if(contact.getName() !=null || contact.getPhones() != null){

@@ -1,7 +1,10 @@
 package com.ezworking.wechatunlock.ui.fragment;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +18,7 @@ import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.adapter.ContactLvAdapter;
 import com.ezworking.wechatunlock.api.ConstantNetUrl;
 import com.ezworking.wechatunlock.api.RequestApi;
+import com.ezworking.wechatunlock.application.AppCache;
 import com.ezworking.wechatunlock.domain.ContactResult;
 import com.ezworking.wechatunlock.greendao.DBManager;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -38,7 +42,7 @@ public class ContactsFragment extends BaseFragment {
     /**
      * 群组id
      */
-    private static final Long ID_WECHAT_GROUP = 123456l;
+    private static final Long ID_WECHAT_GROUP = 12345l;
 
     @Bind(R.id.lv_contact)
     ListView lvContact;
@@ -59,9 +63,11 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        Log.e("token",AppCache.getInstance().getToken());
         adapter = new ContactLvAdapter(getActivity(),contacts);
         lvContact.setAdapter(adapter);
-        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList();
+        List<ContactResult> contactResults = DBManager.getInstance(getActivity(),AppCache.getInstance().getToken()).queryUserList();
+        Log.e("db",contactResults.size() + contactResults.toString());
         if(contactResults != null && contactResults.size() != 0){
             contacts.addAll(contactResults);
             adapter.notifyDataSetChanged();
@@ -121,15 +127,21 @@ public class ContactsFragment extends BaseFragment {
                             contacts1.add(result);
 
 
+                        long id = testWriteContact(name, phone, wechat);
 
-                            //保存在本地群组
-                            addContactToGroup(Integer.parseInt(identifier),ID_WECHAT_GROUP);
+                        ContentValues values1 = new ContentValues();
+                        values1.put(ContactsContract.CommonDataKinds.GroupMembership.RAW_CONTACT_ID,id);
+                        values1.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID,ID_WECHAT_GROUP);
+                        values1.put(ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE);
+                        getActivity().getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values1);
+                        //保存在本地群组
+                            addContactToGroup(id,ID_WECHAT_GROUP);
 
                             //保存数据到数据库
-                            DBManager.getInstance(getActivity()).insertContact(result);
+                            DBManager.getInstance(getActivity(), AppCache.getInstance().getToken()).insertContact(result);
 
                     }
-                    contacts.clear();
+                    //contacts.clear();
                     contacts.addAll(contacts1);
                     adapter.notifyDataSetChanged();
 
@@ -147,6 +159,36 @@ public class ContactsFragment extends BaseFragment {
     }
 
 
+
+    private Uri rawContactsUri = Uri.parse("content://com.android.contacts/raw_contacts");
+    private Uri dataUri = Uri.parse("content://com.android.contacts/data");
+
+    public long testWriteContact(String name ,String phone ,String wechat) {
+        ContentResolver resolver = getActivity().getContentResolver();
+        ContentValues values = new ContentValues();
+
+        // 先向raw_contacts表中写一个id, 自动生成
+        Uri resultUri = resolver.insert(rawContactsUri, values);
+        long id = ContentUris.parseId(resultUri);
+
+        // 然后用这个id向data表中写3条数据
+        values.put("raw_contact_id", id);
+        values.put("mimetype", "vnd.android.cursor.item/name");
+        values.put("data1", name);
+        resolver.insert(dataUri, values);
+
+        values.put("mimetype", "vnd.android.cursor.item/phone_v2");
+        values.put("data1", phone);
+        resolver.insert(dataUri, values);
+
+
+
+        values.put("mimetype", "vnd.android.cursor.item/im");
+        values.put("data1", wechat);
+        resolver.insert(dataUri, values);
+        return id;
+    }
+
     /**
      * 创建微信解锁群组
      */
@@ -162,19 +204,21 @@ public class ContactsFragment extends BaseFragment {
      * @param contactId
      * @param groupId
      */
-    private void addContactToGroup(int contactId,long groupId) {
+    private void addContactToGroup(long contactId,long groupId) {
         //judge whether the contact has been in the group
-        boolean b1 = ifExistContactInGroup(contactId, groupId);
-        if (b1) {
-            //the contact has been in the group
-            return;
-        } else {
-            ContentValues values = new ContentValues();
-            values.put(ContactsContract.CommonDataKinds.GroupMembership.RAW_CONTACT_ID,contactId);
-            values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID,groupId);
-            values.put(ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE);
-            getActivity().getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values);
-        }
+
+        ContentValues values = new ContentValues();
+        values.put(ContactsContract.CommonDataKinds.GroupMembership.RAW_CONTACT_ID,contactId);
+        values.put(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID,groupId);
+        values.put(ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE);
+        getActivity().getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values);
+//        boolean b1 = ifExistContactInGroup(contactId, groupId);
+//        if (b1) {
+//            //the contact has been in the group
+//            return;
+//        } else {
+//
+//        }
     }
 
 
@@ -184,7 +228,7 @@ public class ContactsFragment extends BaseFragment {
      * @param groupId
      * @returns
      */
-    private boolean ifExistContactInGroup(int contactId, long groupId) {
+    private boolean ifExistContactInGroup(long contactId, long groupId) {
         String where = ContactsContract.Contacts.Data.MIMETYPE + " = '" + ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE
                 + "' AND " + ContactsContract.Contacts.Data.DATA1 + " = '" + groupId
                 + "' AND " + ContactsContract.Contacts.Data.RAW_CONTACT_ID + " = '" + contactId + "'";
@@ -209,5 +253,13 @@ public class ContactsFragment extends BaseFragment {
         if (mLoadDialog != null) {
             mLoadDialog.dismiss();
         }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        DBManager instance = DBManager.getInstance(getActivity(), AppCache.getInstance().getToken());
+        instance = null;
     }
 }

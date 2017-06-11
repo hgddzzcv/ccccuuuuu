@@ -12,7 +12,8 @@ import com.ezworking.wechatunlock.adapter.OrderLvAdapter;
 import com.ezworking.wechatunlock.api.ConstantNetUrl;
 import com.ezworking.wechatunlock.api.RequestApi;
 import com.ezworking.wechatunlock.domain.OrderResult;
-import com.ezworking.wechatunlock.ui.view.PullToRefreshView;
+import com.ezworking.wechatunlock.ui.view.PullToRefreshBase;
+import com.ezworking.wechatunlock.ui.view.PullToRefreshListView;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -31,14 +32,11 @@ public class OrdersFragment extends BaseFragment {
 
 
     @Bind(R.id.pull_to_refresh)
-    PullToRefreshView refreshView;
-
+    PullToRefreshListView pullToRefreshListView;
     private LoadingDialog mLoadDialog;
 
     private List<OrderResult.Order> orders = new ArrayList<>();
 
-    @Bind(R.id.orderListView)
-    ListView orderListView;
     private OrderLvAdapter<Object> adapter;
 
     @Override
@@ -49,21 +47,27 @@ public class OrdersFragment extends BaseFragment {
     @Override
     public void initData() {
 
-        refreshView.setEnablePullTorefresh(true);
-        refreshView.setEnablePullLoadMoreDataStatus(true);
-        getOrders();
-        adapter = new OrderLvAdapter<>(getActivity(),orders);
-        if(orders != null && orders.size() != 0){
-            orderListView.setAdapter(adapter);
-
-        }
-
-        refreshView.setOnHeaderRefreshListener(new PullToRefreshView.OnHeaderRefreshListener() {
+        pullToRefreshListView.setPullToRefreshOverScrollEnabled(true);
+        pullToRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onHeaderRefresh(PullToRefreshView view) {
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                //getOrders();
+                orders.clear();
                 getOrders();
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
             }
         });
+
+        adapter = new OrderLvAdapter<>(getActivity(),orders);
+
+        pullToRefreshListView.setAdapter(adapter);
+        getOrders();
+
 
 
     }
@@ -98,6 +102,9 @@ public class OrdersFragment extends BaseFragment {
                         Log.e("111","111" +response);
                         orders.addAll(orderResult.data);
                         adapter.notifyDataSetChanged();
+                        if(pullToRefreshListView.isRefreshing()){
+                            pullToRefreshListView.onRefreshComplete();
+                        }
                     }
 
                 } catch (Exception e) {
@@ -128,5 +135,12 @@ public class OrdersFragment extends BaseFragment {
         if (mLoadDialog != null) {
             mLoadDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        orders.clear();
+        adapter = null;
     }
 }
