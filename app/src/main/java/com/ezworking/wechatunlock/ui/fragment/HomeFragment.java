@@ -1,6 +1,8 @@
 package com.ezworking.wechatunlock.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -56,6 +58,19 @@ public class HomeFragment extends BaseFragment implements RadioGroup.OnCheckedCh
     private LoadingDialog mLoadDialog;
 
     private List<Fragment> fragments = new ArrayList<>();
+    private List<NativeContact> nativeContacts;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    postContacts();
+                    break;
+            }
+        }
+    };
+
 
 
     @Override
@@ -71,7 +86,18 @@ public class HomeFragment extends BaseFragment implements RadioGroup.OnCheckedCh
     @Override
     public void initData() {
         //上传联系人数据
-        //postContacts();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("333","33333333333");
+                nativeContacts = ContactInfoUtils.printContacts(getActivity());
+                handler.sendEmptyMessage(1);
+            }
+        }).start();
+
+
+
         fragments.add(FragmentFactory.getInstance().createFragment(0));
         fragments.add(FragmentFactory.getInstance().createFragment(1));
         viewPager.setAdapter(new NoScrollViewPagerAdapter(getActivity().getSupportFragmentManager(),fragments));
@@ -83,7 +109,9 @@ public class HomeFragment extends BaseFragment implements RadioGroup.OnCheckedCh
     private void postContacts() {
         Log.e("111","走到了");
         //List<NativeContact> allContactInfos = ContactInfoUtils.getAllContactInfos(getActivity());
-        List<NativeContact> nativeContacts = ContactInfoUtils.printContacts(getActivity());
+
+
+
 
         Log.e("111","nativeContacts" + nativeContacts.size());
 

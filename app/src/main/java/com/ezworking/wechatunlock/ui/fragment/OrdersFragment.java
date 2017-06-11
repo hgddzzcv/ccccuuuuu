@@ -39,6 +39,7 @@ public class OrdersFragment extends BaseFragment {
 
     @Bind(R.id.orderListView)
     ListView orderListView;
+    private OrderLvAdapter<Object> adapter;
 
     @Override
     public int setRootView() {
@@ -51,29 +52,22 @@ public class OrdersFragment extends BaseFragment {
         refreshView.setEnablePullTorefresh(true);
         refreshView.setEnablePullLoadMoreDataStatus(true);
         getOrders();
-        orderListView.setAdapter(new OrderLvAdapter<OrderResult.Order>(getActivity(),orders));
+        adapter = new OrderLvAdapter<>(getActivity(),orders);
+        if(orders != null && orders.size() != 0){
+            orderListView.setAdapter(adapter);
 
+        }
 
         refreshView.setOnHeaderRefreshListener(new PullToRefreshView.OnHeaderRefreshListener() {
             @Override
             public void onHeaderRefresh(PullToRefreshView view) {
-
+                getOrders();
             }
         });
 
+
     }
 
-//    public List<OrderResult> getOrders() {
-//        List<OrderResult> orders = new ArrayList<>();
-//        orders.add(new OrderResult("0000001","13622382905","1","1000","000093"));
-//        orders.add(new OrderResult("0000002","13622382905","0","1000","000093"));
-//        orders.add(new OrderResult("0000003","13622382905","2","1000","000093"));
-//        orders.add(new OrderResult("0000004","13622382905","-1","1000","000093"));
-//        orders.add(new OrderResult("0000005","13622382905","1","1000","000093"));
-//        orders.add(new OrderResult("0000006","13622382905","2","1000","000093"));
-//
-//        return orders;
-//    }
 
     public void getOrders(){
         JSONObject jsonObject = new JSONObject();
@@ -101,7 +95,9 @@ public class OrdersFragment extends BaseFragment {
                     }
 
                     if (orderResult!=null){
+                        Log.e("111","111" +response);
                         orders.addAll(orderResult.data);
+                        adapter.notifyDataSetChanged();
                     }
 
                 } catch (Exception e) {

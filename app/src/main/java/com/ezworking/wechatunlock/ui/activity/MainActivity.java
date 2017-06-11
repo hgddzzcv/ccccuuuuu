@@ -4,6 +4,7 @@ import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
-import com.ezworking.my_android.base.BaseActivity;
 import com.ezworking.my_android.base.BaseApplication;
 import com.ezworking.my_android.base.utils.CommonActionBar;
 import com.ezworking.my_android.base.utils.PageJumps;
@@ -107,7 +107,9 @@ public class MainActivity extends AppBaseActivity{
 
                 exitTime = System.currentTimeMillis();
             } else {
-                finish();
+
+                Log.e("exit","aaaaaaaaaaaaaaa");
+               // finish();
                 Process.killProcess(Process.myPid());
               //  System.exit(0);
                 BaseApplication.getInst().exit();

@@ -178,7 +178,8 @@ public class PullToRefreshView extends LinearLayout {
         mHeaderUpdateTextView = (TextView) mHeaderView.findViewById(R.id.pull_to_refresh_updated_at);
         mHeaderProgressBar = (ProgressBar) mHeaderView.findViewById(R.id.pull_to_refresh_progress);
         // header layout
-        measureView(mHeaderView);
+        //measureView(mHeaderView);
+        mHeaderImageView.measure(0,0);
         mHeaderViewHeight = mHeaderView.getMeasuredHeight();
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, mHeaderViewHeight);
         // 设置topMargin的值为负的header View高度,即将其隐藏在最上方
@@ -249,7 +250,7 @@ public class PullToRefreshView extends LinearLayout {
             p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
 
-        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
+        int childWidthSpec = ViewGroup.getChildMeasureSpec(0,0, p.width);
         int lpHeight = p.height;
         int childHeightSpec;
         if (lpHeight > 0) {

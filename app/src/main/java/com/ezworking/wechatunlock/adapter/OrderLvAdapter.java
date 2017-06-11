@@ -114,7 +114,7 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
     @Override
     public void onClick(View v) {
         View convertView = (View) v.getParent();
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+        final ViewHolder holder = (ViewHolder) convertView.getTag();
         final int position = holder.position;
         final String oID = orders.get(position).oID;
         switch (v.getId()){
@@ -131,9 +131,11 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         requestState(oID,"1",position);
+
                     }
                 });
                 builder.show();
+                holder.stateButton.setClickable(false);
                 break;
         }
     }
