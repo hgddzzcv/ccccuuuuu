@@ -1,10 +1,14 @@
 package com.ezworking.wechatunlock.ui.activity;
 
 
+import android.os.SystemClock;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dou361.statusbar.StatusBarUtil;
@@ -31,6 +35,11 @@ public class LoadingActivity extends AppBaseActivity {
 
     @Bind(R.id.loading_rootview)
     RelativeLayout loading_rootview;
+    @Bind(R.id.iv1)
+    ImageView imageView1;
+    @Bind(R.id.iv2)
+    ImageView imageView2;
+
 
     private Boolean isAnimationEnd = false;
 
@@ -61,6 +70,25 @@ public class LoadingActivity extends AppBaseActivity {
     public void initData(){
        // startLoadingAnimation();
         StatusBarUtil.setColorNoTranslucent(this,getResources().getColor(R.color.white));
+        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        int width = wm.getDefaultDisplay().getWidth();
+
+
+//        layoutParams.height = height /4;
+//        lLayout.setLayoutParams(layoutParams);
+
+        ViewGroup.LayoutParams layoutParams = imageView1.getLayoutParams();
+        layoutParams.height=height/5*4;
+        layoutParams.width=width/3*2;
+//        imageView1.setPadding(0,height/4,0,0);
+        ViewGroup.LayoutParams layoutParams1 = imageView2.getLayoutParams();
+        layoutParams1.height=height/7;
+        layoutParams1.width=width/3;
+        imageView1.setLayoutParams(layoutParams);
+        imageView2.setLayoutParams(layoutParams1);
+
+
         initAnimation();
         /*isAnimationEnd = true;
         handler.sendEmptyMessage(ENTER_APP_CHECK);*/
@@ -105,6 +133,7 @@ public class LoadingActivity extends AppBaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                SystemClock.sleep(1500);
                 enterApp();
             }
 

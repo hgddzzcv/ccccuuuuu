@@ -37,7 +37,6 @@ public class RequestApi {
         client = new AsyncHttpClient();
         client.setConnectTimeout(20000);
         client.setResponseTimeout(20000);
-
     }
 
     public static void jsonPost(Context context,String url,JSONObject jsonObject,AsyncHttpResponseHandler asyncHttpResponseHandler){
@@ -158,6 +157,16 @@ public class RequestApi {
 
 
 
+    public static void jsonGet(Context context,String url,AsyncHttpResponseHandler asyncHttpResponseHandler){
+        Log.d("api",url);
+        if(!NetWorkUtil.isNetworkConnected(context)){
+            ToastUtil.showToast(context,"网络不可用!");
+            return;
+        }
 
+
+        client.addHeader("Content-Type","application/json; charset=UTF-8");
+        client.get(context,url, asyncHttpResponseHandler);
+    }
 
 }

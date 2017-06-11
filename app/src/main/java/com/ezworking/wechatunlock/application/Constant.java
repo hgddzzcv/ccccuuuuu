@@ -18,8 +18,8 @@ public class Constant {
     public final static String DES_KEY = "19990909";
 
     //微信
-    public final static String WX_APP_ID = "wxd26189b4008601c6";
-    public final static String WX_APP_SECRET = "557de6040c8d72554fe3b5c709d84f67";
+    public final static String WX_APP_ID = "wxf1efdca86c1c6557";
+    public final static String WX_APP_SECRET = "98526f9840587a229a01401da1ed7269";
     //QQ
     public final static String QQ_APP_ID = "101351009";
     public final static String QQ_APP_SECRET = "17c10d20220e7e061915002625d52e4d";

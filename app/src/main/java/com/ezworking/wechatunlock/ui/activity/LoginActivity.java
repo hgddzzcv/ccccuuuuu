@@ -22,17 +22,20 @@ import com.ezworking.my_android.base.BaseApplication;
 import com.ezworking.my_android.base.utils.AsyncHttpClientUtil;
 import com.ezworking.my_android.base.utils.CommonActionBar;
 import com.ezworking.my_android.base.utils.LogUtil;
+import com.ezworking.my_android.base.utils.NetWorkUtil;
 import com.ezworking.my_android.base.utils.PageJumps;
 import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
 import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.api.RequestApi;
 import com.ezworking.wechatunlock.application.AppCache;
+import com.ezworking.wechatunlock.application.MainApplication;
 import com.ezworking.wechatunlock.domain.UserInfoBean;
 import com.ezworking.wechatunlock.ui.AppBaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import butterknife.Bind;
 import cz.msebera.android.httpclient.Header;
@@ -71,9 +74,9 @@ public class LoginActivity extends AppBaseActivity {
 
     @Override
     public void setRootView() {
-//        if(getSupportActionBar() != null){
-//            getSupportActionBar().hide();
-//        }
+        if(getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_login);
     }
 
@@ -132,7 +135,7 @@ public class LoginActivity extends AppBaseActivity {
             @Override
             public void onClick(View v) {
 
-            PageJumps.PageJumps(aty,RegisterActivity.class,null);
+                wxLogin();
 
             }
         });
@@ -146,11 +149,25 @@ public class LoginActivity extends AppBaseActivity {
 
 
     }
+    public void wxLogin() {
 
+        if(!NetWorkUtil.isNetworkConnected(aty)){
+            ToastUtil.showToast(aty,"网络不可用!");
+            return;
+        }
+        if (!MainApplication.mWxApi.isWXAppInstalled()) {
+            ToastUtil.showToast(aty,"您还未安装微信客户端");
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        MainApplication.mWxApi.sendReq(req);
+    }
 
     private void showLoading(String msg) {
         mLoadDialog = new LoadingDialog(msg);
-        //mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
+        mLoadDialog.show(getSupportFragmentManager(), LoadingDialog.TAG);
     }
 
     private void dismissLoading() {

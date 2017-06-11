@@ -172,22 +172,29 @@ public class CustomDialog extends Dialog {
 			} else {
 				leftBtn.setVisibility(View.GONE);
 			}
-			if (message != null) {
+			if (message != null&&imagePath == null) {
 				((ImageView) layout.findViewById(R.id.dialogIcon))
 						.setVisibility(View.GONE);
 				((TextView) layout.findViewById(R.id.dialogContent))
 						.setVisibility(View.VISIBLE);
 				((TextView) layout.findViewById(R.id.dialogContent))
 						.setText(message);
-			} else if (imagePath != null) {
+			} else if (message != null&&imagePath != null) {
 				((ImageView) layout.findViewById(R.id.dialogIcon))
 						.setVisibility(View.VISIBLE);
 				((TextView) layout.findViewById(R.id.dialogContent))
-						.setVisibility(View.GONE);
+						.setVisibility(View.VISIBLE);
 				((ImageView) layout.findViewById(R.id.dialogIcon))
 						.setImageURI(imagePath);
-				((LinearLayout) layout.findViewById(R.id.dialogText))
-						.setGravity(Gravity.CENTER);
+				LayoutParams layoutParams = ((ImageView) layout
+						.findViewById(R.id.dialogIcon)).getLayoutParams();
+			//	layoutParams.width = LayoutParams.WRAP_CONTENT;
+				layoutParams.height = LayoutParams.WRAP_CONTENT;
+				((ImageView) layout
+						.findViewById(R.id.dialogIcon)).setLayoutParams(layoutParams);
+
+				/*((LinearLayout) layout.findViewById(R.id.dialogText))
+						.setGravity(Gravity.CENTER);*/
 			}
 			if (gravity != -1) {
 				((LinearLayout) layout.findViewById(R.id.dialogText))

@@ -3,6 +3,8 @@ package com.ezworking.wechatunlock.application;
 
 import com.ezworking.my_android.base.BaseApplication;
 import com.ezworking.my_android.base.utils.CrashHandler;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 
 /**
@@ -14,6 +16,7 @@ public class MainApplication extends BaseApplication {
 
     public boolean isDownload;
  //   public ButtonBean buttonBean = null;
+    public static IWXAPI mWxApi;
 
     public static MainApplication mContext = null;
     public synchronized static MainApplication getInstance() {
@@ -35,15 +38,10 @@ public class MainApplication extends BaseApplication {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-   //     UMShareAPI.get(this);
 
         mContext = this;
 
-//        crashHandler.savePath = Environment.getExternalStorageDirectory()+ File.separator+getPackageName()+"/LOG/";
-//        File file = new File(crashHandler.savePath);
-//        if(!file.exists()){
-//            file.mkdirs();
-//        }
+        registToWX();
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(getApplicationContext());
         AppCache.getInstance().init(application);
@@ -58,6 +56,12 @@ public class MainApplication extends BaseApplication {
         return mContext.getExternalFilesDir(dirName).getAbsolutePath();
     }
 
+    private void registToWX() {
+        //AppConst.WEIXIN.APP_ID是指你应用在微信开放平台上的AppID，记得替换。
+        mWxApi = WXAPIFactory.createWXAPI(this, Constant.WX_APP_ID, false);
+        // 将该app注册到微信
+        mWxApi.registerApp(Constant.WX_APP_ID);
+    }
 
 
 }

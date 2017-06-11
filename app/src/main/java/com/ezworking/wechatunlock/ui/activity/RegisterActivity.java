@@ -1,5 +1,6 @@
 package com.ezworking.wechatunlock.ui.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
@@ -108,6 +109,8 @@ public class RegisterActivity extends AppBaseActivity {
 
     @Override
     public void initData() {
+        String nickname = getIntent().getStringExtra("nickname");
+        String headimgurl = getIntent().getStringExtra("headimgurl");
         initCustomActionBar();
         mRegiser.setAlpha(0.4f);
         mRegiser.setEnabled(false);
@@ -124,6 +127,15 @@ public class RegisterActivity extends AppBaseActivity {
         layoutParams.height = height /4;
         lLayout.setLayoutParams(layoutParams);*/
         simpleDraweeView.setImageResource(R.drawable.icon_avatar);
+        if (headimgurl==null){
+            simpleDraweeView.setImageResource(R.drawable.icon_avatar);
+        }else{
+            simpleDraweeView.setImageURI(headimgurl);
+        }
+        if (nickname!=null){
+            mNickName.setText(nickname);
+            mNickName.setEnabled(true);
+        }
 
         mRegiser.setEnabled(false);
         mRegiser.setAlpha(0.4f);
