@@ -44,8 +44,10 @@ public class MyinfoActivity extends AppBaseActivity {
     Button phoneRate;
     @Bind(R.id.bt_money_rate)
     Button moneyRate;
+    String point;
     private LoadingDialog mLoadDialog;
     private ExchangeRataBean exchangeRataBean;
+    public static Boolean onResumeRefresh = false;
 
     @Override
     public void setRootView() {
@@ -140,7 +142,9 @@ public class MyinfoActivity extends AppBaseActivity {
                               wechat.setText(myinfoBean.getData().getWechat());
                               qq.setText(myinfoBean.getData().getQq());
                               phone.setText(myinfoBean.getData().getPhone());
-                              points.setText(myinfoBean.getData().getPoints());
+                               point = myinfoBean.getData().getPoints();
+                               points.setText(point);
+                              SharePreferenceUtils.putValueToSP(aty,"point",point);
                           }
 
                       } catch (Exception e) {
@@ -175,6 +179,8 @@ public class MyinfoActivity extends AppBaseActivity {
                             SharePreferenceUtils.putValueToSP(aty,"cashNum",cashNum);
                             SharePreferenceUtils.putValueToSP(aty,"cashRate",cashRate);
 
+
+
                         }
 
                     } catch (UnsupportedEncodingException e) {
@@ -204,4 +210,15 @@ public class MyinfoActivity extends AppBaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //改变积分
+        if(onResumeRefresh){
+            onResumeRefresh = false;
+            getData();
+
+        }
+
+    }
 }

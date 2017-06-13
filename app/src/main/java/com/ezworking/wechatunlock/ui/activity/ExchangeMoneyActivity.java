@@ -3,6 +3,7 @@ package com.ezworking.wechatunlock.ui.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ezworking.my_android.base.utils.CommonActionBar;
+import com.ezworking.my_android.base.utils.LogUtil;
 import com.ezworking.my_android.base.utils.SharePreferenceUtils;
 import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import cz.msebera.android.httpclient.Header;
@@ -40,12 +43,13 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
     @Bind(R.id.tv_like2)
     TextView tvLike;
     @Bind(R.id.point)
-    TextView point;
+    TextView points;
     @Bind(R.id.exchange)
     Button exchange;
     private int cashRate;
     private int cashNum;
     private String et;
+    private String point;
     private LoadingDialog mLoadDialog;
 
 
@@ -61,7 +65,11 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
         exchange.setAlpha(0.4f);
         cashNum =  SharePreferenceUtils.getValueFromSP(aty, "cashNum", 0);
         cashRate =  SharePreferenceUtils.getValueFromSP(aty, "cashRate", 0);
-        point.setText("/"+cashNum);
+        LogUtil.e("cashNum---"+cashNum);
+        LogUtil.e("cashRate---"+cashRate);
+        point = SharePreferenceUtils.getValueFromSP(aty, "point","");
+        points.setText("/"+point);
+
         edittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,16 +84,22 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 et =  edittext.getText().toString().trim();
+                if (et != null && et.length() > 0&&Integer.parseInt(et)>Integer.parseInt(point)){
+                    ToastUtil.showToast(aty,"超出可兑换积分数!");
+                    edittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(point.length()+1)});
+                }
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (et != null && et.length() > 0) {
+                        if (et != null && et.length() > 0&&Integer.parseInt(et)<=Integer.parseInt(point)) {
                             exchange.setEnabled(true);
                             exchange.setAlpha(1.0f);
                             final int num = Integer.parseInt(et);
+                            DecimalFormat df = new DecimalFormat("0.0");
+                            String moeny = df.format((float)num/cashRate);
 
-                            Like.setText("" + num * cashRate);
+                            Like.setText("" + moeny);
                             tvLike.setVisibility(View.VISIBLE);
                         }else{
                             Like.setText("");
@@ -140,8 +154,11 @@ public class ExchangeMoneyActivity extends AppBaseActivity {
                                     return;
                                 }
 
-                                showMessageDialog("恭喜你,本次兑换积分成功,系统审核后将第一时间通知你!");
-
+                                MyinfoActivity.onResumeRefresh =true;
+                                showMessageDialog("恭喜你,本次兑换"+et+"积分成功,系统审核后将第一时间与您确认!");
+                                int p = Integer.parseInt(point)- Integer.parseInt(et);
+                                point = String.valueOf(p);
+                                points.setText("/"+point);
 
                             } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();

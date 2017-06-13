@@ -3,6 +3,7 @@ package com.ezworking.wechatunlock.ui.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ezworking.my_android.base.utils.CommonActionBar;
+import com.ezworking.my_android.base.utils.LogUtil;
 import com.ezworking.my_android.base.utils.SharePreferenceUtils;
 import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
@@ -42,12 +44,13 @@ public class ExchangeLikeActivity extends AppBaseActivity {
     @Bind(R.id.tv_like2)
     TextView tvLike;
     @Bind(R.id.point)
-    TextView point;
+    TextView points;
     @Bind(R.id.exchange)
     Button exchange;
     private int qqRate;
     private int qqNum;
     private String et;
+    private String point;
     private LoadingDialog mLoadDialog;
 
 
@@ -63,7 +66,8 @@ public class ExchangeLikeActivity extends AppBaseActivity {
         exchange.setAlpha(0.4f);
         qqNum = SharePreferenceUtils.getValueFromSP(aty, "qqNum", 0);
         qqRate = SharePreferenceUtils.getValueFromSP(aty, "qqRate", 0);
-        point.setText("/" + qqNum);
+        point = SharePreferenceUtils.getValueFromSP(aty, "point", "");
+        points.setText("/" + point);
         edittext.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -78,16 +82,20 @@ public class ExchangeLikeActivity extends AppBaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 et = edittext.getText().toString().trim();
+                if (et != null && et.length() > 0&&Integer.parseInt(et)>Integer.parseInt(point)){
+                    ToastUtil.showToast(aty,"超出可兑换积分数!");
+                    edittext.setFilters(new InputFilter[]{new InputFilter.LengthFilter(point.length()+1)});
+                }
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (et != null && et.length() > 0) {
+                            if (et != null && et.length() > 0&&Integer.parseInt(et)<=Integer.parseInt(point)) {
                                 exchange.setEnabled(true);
                                 exchange.setAlpha(1.0f);
                                 final int num = Integer.parseInt(et);
 
-                            Like.setText("" + num * qqRate);
+                            Like.setText("" + num / qqRate);
                             tvLike.setVisibility(View.VISIBLE);
                             }else{
                                 Like.setText("");
@@ -139,9 +147,11 @@ public class ExchangeLikeActivity extends AppBaseActivity {
                                     ToastUtil.showToast(aty, resultbean.getErrorMsg());
                                     return;
                                 }
-
-                                    showMessageDialog("恭喜你,本次兑换积分成功,系统审核后将第一时间通知你!");
-
+                                    MyinfoActivity.onResumeRefresh =true;
+                                    showMessageDialog("恭喜你,本次兑换"+et+"积分成功,系统审核后将第一时间与您确认!");
+                                int p = Integer.parseInt(point)- Integer.parseInt(et);
+                                point = String.valueOf(p);
+                                points.setText("/"+point);
 
 
                             } catch (UnsupportedEncodingException e) {

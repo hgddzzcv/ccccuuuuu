@@ -2,6 +2,7 @@ package com.ezworking.wechatunlock.ui.activity;
 
 import android.content.Context;
 import android.os.Process;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -53,11 +54,10 @@ public class LoginActivity extends AppBaseActivity {
     @Bind(R.id.show_code_ib)
     ImageButton mShowCodeIb;
 
-    @Bind(R.id.no_accout)
-    TextView noAccount;
-
     @Bind(R.id.tv_forgot)
     TextView forgot;
+    @Bind(R.id.ll_layout)
+    LinearLayout ll;
 
     private LoadingDialog mLoadDialog;
     private long exitTime = 0;
@@ -131,12 +131,11 @@ public class LoginActivity extends AppBaseActivity {
             }
         });
 
-        noAccount.setOnClickListener(new View.OnClickListener() {
+        ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 wxLogin();
-
             }
         });
 
@@ -163,6 +162,7 @@ public class LoginActivity extends AppBaseActivity {
         req.scope = "snsapi_userinfo";
         req.state = "diandi_wx_login";
         MainApplication.mWxApi.sendReq(req);
+
     }
 
     private void showLoading(String msg) {

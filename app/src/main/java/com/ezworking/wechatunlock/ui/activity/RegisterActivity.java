@@ -127,11 +127,11 @@ public class RegisterActivity extends AppBaseActivity {
         layoutParams.height = height /4;
         lLayout.setLayoutParams(layoutParams);*/
         simpleDraweeView.setImageResource(R.drawable.icon_avatar);
-        if (headimgurl==null){
+       /* if (headimgurl==null){
             simpleDraweeView.setImageResource(R.drawable.icon_avatar);
         }else{
             simpleDraweeView.setImageURI(headimgurl);
-        }
+        }*/
         if (nickname!=null){
             mNickName.setText(nickname);
             mNickName.setEnabled(true);
@@ -386,6 +386,7 @@ public class RegisterActivity extends AppBaseActivity {
                         AppCache.getInstance().saveUserInfo(userInfoBean);
                         AppCache.getInstance().setUserLogin(true);
                         AppCache.getInstance().setPassword(pwd);
+                        LogUtil.e("跳到main");
                         PageJumps.PageJumps(aty,MainActivity.class,null);
                         finish();
 

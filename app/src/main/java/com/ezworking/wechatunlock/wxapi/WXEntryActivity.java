@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.dou361.statusbar.StatusBarUtil;
 import com.ezworking.my_android.base.utils.LogUtil;
 import com.ezworking.my_android.base.utils.PageJumps;
 import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
+import com.ezworking.wechatunlock.R;
 import com.ezworking.wechatunlock.api.RequestApi;
 import com.ezworking.wechatunlock.application.Constant;
 import com.ezworking.wechatunlock.application.MainApplication;
@@ -41,7 +43,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //如果没回调onResp，八成是这句没有写
         MainApplication.mWxApi.handleIntent(getIntent(), this);
 
@@ -50,6 +51,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     // 微信发送请求到第三方应用时，会回调到该方法
     @Override
     public void onReq(BaseReq req) {
+
 
     }
 
@@ -65,6 +67,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 if (RETURN_MSG_TYPE_SHARE == resp.getType()) ToastUtil.showToast(this, "分享失败");
                 else ToastUtil.showToast(this, "登录失败");
+                finish();
                 break;
             case BaseResp.ErrCode.ERR_OK:
                 switch (resp.getType()) {
