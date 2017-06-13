@@ -118,7 +118,7 @@ public class DBManager {
     /**
      * 查询用户列表
      */
-    public List<ContactResult> queryUserList(int identifier) {
+    public List<ContactResult> queryUserList(String identifier) {
         DaoMaster daoMaster = new DaoMaster(getReadableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         ContactResultDao userDao = daoSession.getContactResultDao();

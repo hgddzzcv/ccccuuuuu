@@ -42,7 +42,7 @@ public class ContactsFragment extends BaseFragment {
     /**
      * 群组id
      */
-    private static final Long ID_WECHAT_GROUP = 12345l;
+    private static final Long ID_WECHAT_GROUP = 1234567l;
 
     @Bind(R.id.lv_contact)
     ListView lvContact;
@@ -66,7 +66,7 @@ public class ContactsFragment extends BaseFragment {
         Log.e("token",AppCache.getInstance().getToken());
         adapter = new ContactLvAdapter(getActivity(),contacts);
         lvContact.setAdapter(adapter);
-        List<ContactResult> contactResults = DBManager.getInstance(getActivity(),AppCache.getInstance().getToken()).queryUserList();
+        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList(AppCache.getInstance().getToken());
         Log.e("db",contactResults.size() + contactResults.toString());
         if(contactResults != null && contactResults.size() != 0){
             contacts.addAll(contactResults);
@@ -123,7 +123,7 @@ public class ContactsFragment extends BaseFragment {
                             result.name = name;
                             result.phone = phone;
                             result.wechat = wechat;
-                            result.identifier = identifier;
+                            result.identifier = AppCache.getInstance().getToken();
                             contacts1.add(result);
 
 
@@ -138,7 +138,7 @@ public class ContactsFragment extends BaseFragment {
                             addContactToGroup(id,ID_WECHAT_GROUP);
 
                             //保存数据到数据库
-                            DBManager.getInstance(getActivity(), AppCache.getInstance().getToken()).insertContact(result);
+                            DBManager.getInstance(getActivity()).insertContact(result);
 
                     }
                     //contacts.clear();
@@ -256,10 +256,4 @@ public class ContactsFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        DBManager instance = DBManager.getInstance(getActivity(), AppCache.getInstance().getToken());
-        instance = null;
-    }
 }
