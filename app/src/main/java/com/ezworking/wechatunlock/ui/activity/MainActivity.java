@@ -83,7 +83,7 @@ public class MainActivity extends AppBaseActivity{
         fragmentTransaction.replace(R.id.main_container,new HomeFragment());
         fragmentTransaction.commit();
 
-        getData();
+      //  getData();
 
     }
 

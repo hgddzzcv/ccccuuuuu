@@ -140,6 +140,7 @@ public class CustomDialog extends Dialog {
 
 			TextView rightBtn = (TextView) layout.findViewById(R.id.dialogRightBtn);
 			TextView leftBtn = (TextView) layout.findViewById(R.id.dialogLeftBtn);
+			View view = layout.findViewById(R.id.view);
 			leftBtn.setTextColor(negativeButtonTextColor);
 			rightBtn.setTextColor(positiveButtonTextColor);
 
@@ -158,6 +159,7 @@ public class CustomDialog extends Dialog {
 				}
 			} else {
 				rightBtn.setVisibility(View.GONE);
+				view.setVisibility(View.GONE);
 			}
 			if (negativeButtonText != null) {
 				leftBtn.setText(negativeButtonText);
@@ -171,15 +173,16 @@ public class CustomDialog extends Dialog {
 				}
 			} else {
 				leftBtn.setVisibility(View.GONE);
+				view.setVisibility(View.GONE);
 			}
-			if (message != null&&imagePath == null) {
+			if (imagePath == null&&message != null) {
 				((ImageView) layout.findViewById(R.id.dialogIcon))
 						.setVisibility(View.GONE);
 				((TextView) layout.findViewById(R.id.dialogContent))
 						.setVisibility(View.VISIBLE);
 				((TextView) layout.findViewById(R.id.dialogContent))
 						.setText(message);
-			} else if (message != null&&imagePath != null) {
+			} else if (imagePath != null&&message != null) {
 				((ImageView) layout.findViewById(R.id.dialogIcon))
 						.setVisibility(View.VISIBLE);
 				((TextView) layout.findViewById(R.id.dialogContent))
@@ -188,13 +191,12 @@ public class CustomDialog extends Dialog {
 						.setImageURI(imagePath);
 				LayoutParams layoutParams = ((ImageView) layout
 						.findViewById(R.id.dialogIcon)).getLayoutParams();
-			//	layoutParams.width = LayoutParams.WRAP_CONTENT;
 				layoutParams.height = LayoutParams.WRAP_CONTENT;
 				((ImageView) layout
 						.findViewById(R.id.dialogIcon)).setLayoutParams(layoutParams);
 
-				/*((LinearLayout) layout.findViewById(R.id.dialogText))
-						.setGravity(Gravity.CENTER);*/
+				((LinearLayout) layout.findViewById(R.id.dialogText))
+						.setGravity(Gravity.CENTER);
 			}
 			if (gravity != -1) {
 				((LinearLayout) layout.findViewById(R.id.dialogText))

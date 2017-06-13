@@ -1,12 +1,15 @@
 package com.ezworking.wechatunlock.ui.fragment;
 
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,6 +24,7 @@ import com.ezworking.wechatunlock.api.RequestApi;
 import com.ezworking.wechatunlock.application.AppCache;
 import com.ezworking.wechatunlock.domain.ContactResult;
 import com.ezworking.wechatunlock.greendao.DBManager;
+import com.ezworking.wechatunlock.ui.view.CustomDialog;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -66,7 +70,7 @@ public class ContactsFragment extends BaseFragment {
         Log.e("token",AppCache.getInstance().getToken());
         adapter = new ContactLvAdapter(getActivity(),contacts);
         lvContact.setAdapter(adapter);
-        List<ContactResult> contactResults = DBManager.getInstance(getActivity(),AppCache.getInstance().getToken()).queryUserList();
+        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList();
         Log.e("db",contactResults.size() + contactResults.toString());
         if(contactResults != null && contactResults.size() != 0){
             contacts.addAll(contactResults);
@@ -105,8 +109,12 @@ public class ContactsFragment extends BaseFragment {
                     JSONObject json1 = new JSONObject(response);
                     Log.e("111","json1" + json1.toString());
                     String data = json1.optString("data");
+                    String points = json1.optString("points");
                     JSONArray array1 = new JSONArray(data);
                     Log.e("111","array1" + array1.toString());
+
+
+                    showMessageDialog("恭喜您, 本次下载号码"+array1.length()+"个, 获得"+points+"个积分");
 
                     //创建微信解锁群组
                     createGroup();
@@ -138,7 +146,7 @@ public class ContactsFragment extends BaseFragment {
                             addContactToGroup(id,ID_WECHAT_GROUP);
 
                             //保存数据到数据库
-                            DBManager.getInstance(getActivity(), AppCache.getInstance().getToken()).insertContact(result);
+                            DBManager.getInstance(getActivity()).insertContact(result);
 
                     }
                     //contacts.clear();
@@ -158,6 +166,26 @@ public class ContactsFragment extends BaseFragment {
         });
     }
 
+
+    public void showMessageDialog(String message) {
+        Dialog dialog = null;
+        CustomDialog.Builder customBuilder = new CustomDialog.Builder(getActivity());
+        customBuilder.setTitle("下载成功");
+        customBuilder.setMessage(message);
+        customBuilder.setGravity(Gravity.CENTER);
+        customBuilder.setPositiveButtonTextColor(getActivity().getResources().getColor(R.color.main_bottom_btn_press1));
+        customBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+
+
+            }
+        });
+        dialog = customBuilder.create();
+        dialog.setCancelable(false);
+        dialog.show();
+    }
 
 
     private Uri rawContactsUri = Uri.parse("content://com.android.contacts/raw_contacts");
@@ -256,10 +284,4 @@ public class ContactsFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        DBManager instance = DBManager.getInstance(getActivity(), AppCache.getInstance().getToken());
-        instance = null;
-    }
 }
