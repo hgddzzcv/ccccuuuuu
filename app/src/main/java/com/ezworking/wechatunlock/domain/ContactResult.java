@@ -9,11 +9,18 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class ContactResult extends ResultBean {
-    @Id
-    public String identifier;
+    @Id(autoincrement = true)
+    public Long id;
     public String name;
     public String phone;
     public String wechat;
+    public String identifier;
+    public String getIdentifier() {
+        return this.identifier;
+    }
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
     public String getWechat() {
         return this.wechat;
     }
@@ -32,37 +39,23 @@ public class ContactResult extends ResultBean {
     public void setName(String name) {
         this.name = name;
     }
-    public String getIdentifier() {
-        return this.identifier;
+    public Long getId() {
+        return this.id;
     }
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    public void setId(Long id) {
+        this.id = id;
     }
-    @Generated(hash = 959752039)
-    public ContactResult(String identifier, String name, String phone, String wechat) {
-        this.identifier = identifier;
+    @Generated(hash = 658022499)
+    public ContactResult(Long id, String name, String phone, String wechat,
+            String identifier) {
+        this.id = id;
         this.name = name;
         this.phone = phone;
         this.wechat = wechat;
+        this.identifier = identifier;
     }
     @Generated(hash = 1457122003)
     public ContactResult() {
     }
-
-    @Override
-    public String toString() {
-        return "ContactResult{" +
-                "identifier='" + identifier + '\'' +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", wechat='" + wechat + '\'' +
-                '}';
-    }
-
-    //    public String points;
-//    public List<DataDataBean> data;
-//
-//    public static class DataDataBean {
-//
-//    }
+   
 }

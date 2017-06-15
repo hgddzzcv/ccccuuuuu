@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "CONTACT_RESULT".
 */
-public class ContactResultDao extends AbstractDao<ContactResult, String> {
+public class ContactResultDao extends AbstractDao<ContactResult, Long> {
 
     public static final String TABLENAME = "CONTACT_RESULT";
 
@@ -22,10 +22,11 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Identifier = new Property(0, String.class, "identifier", true, "IDENTIFIER");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Phone = new Property(2, String.class, "phone", false, "PHONE");
         public final static Property Wechat = new Property(3, String.class, "wechat", false, "WECHAT");
+        public final static Property Identifier = new Property(4, String.class, "identifier", false, "IDENTIFIER");
     };
 
 
@@ -41,10 +42,11 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CONTACT_RESULT\" (" + //
-                "\"IDENTIFIER\" TEXT PRIMARY KEY NOT NULL ," + // 0: identifier
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
                 "\"PHONE\" TEXT," + // 2: phone
-                "\"WECHAT\" TEXT);"); // 3: wechat
+                "\"WECHAT\" TEXT," + // 3: wechat
+                "\"IDENTIFIER\" TEXT);"); // 4: identifier
     }
 
     /** Drops the underlying database table. */
@@ -57,9 +59,9 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
     protected final void bindValues(DatabaseStatement stmt, ContactResult entity) {
         stmt.clearBindings();
  
-        String identifier = entity.getIdentifier();
-        if (identifier != null) {
-            stmt.bindString(1, identifier);
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
         }
  
         String name = entity.getName();
@@ -75,6 +77,11 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
         String wechat = entity.getWechat();
         if (wechat != null) {
             stmt.bindString(4, wechat);
+        }
+ 
+        String identifier = entity.getIdentifier();
+        if (identifier != null) {
+            stmt.bindString(5, identifier);
         }
     }
 
@@ -82,9 +89,9 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
     protected final void bindValues(SQLiteStatement stmt, ContactResult entity) {
         stmt.clearBindings();
  
-        String identifier = entity.getIdentifier();
-        if (identifier != null) {
-            stmt.bindString(1, identifier);
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
         }
  
         String name = entity.getName();
@@ -101,41 +108,49 @@ public class ContactResultDao extends AbstractDao<ContactResult, String> {
         if (wechat != null) {
             stmt.bindString(4, wechat);
         }
+ 
+        String identifier = entity.getIdentifier();
+        if (identifier != null) {
+            stmt.bindString(5, identifier);
+        }
     }
 
     @Override
-    public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public ContactResult readEntity(Cursor cursor, int offset) {
         ContactResult entity = new ContactResult( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // identifier
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // phone
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // wechat
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // wechat
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // identifier
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, ContactResult entity, int offset) {
-        entity.setIdentifier(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setPhone(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setWechat(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setIdentifier(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override
-    protected final String updateKeyAfterInsert(ContactResult entity, long rowId) {
-        return entity.getIdentifier();
+    protected final Long updateKeyAfterInsert(ContactResult entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public String getKey(ContactResult entity) {
+    public Long getKey(ContactResult entity) {
         if(entity != null) {
-            return entity.getIdentifier();
+            return entity.getId();
         } else {
             return null;
         }

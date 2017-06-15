@@ -78,16 +78,6 @@ public class OrdersFragment extends BaseFragment {
         RequestApi.jsonPost(getActivity(), ConstantNetUrl.GETMYORDERLIST, jsonObject, new AsyncHttpResponseHandler() {
 
             @Override
-            public void onStart() {
-                showLoading("");
-            }
-
-            @Override
-            public void onFinish() {
-                dismissLoading();
-            }
-
-            @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
                     String response = new String(responseBody, "utf-8");

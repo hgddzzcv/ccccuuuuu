@@ -22,6 +22,7 @@ import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -31,11 +32,14 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ezworking.wechatunlock.R;
+import com.ezworking.wechatunlock.application.MainApplication;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 
 @SuppressLint("ViewConstructor")
@@ -47,7 +51,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
 	private FrameLayout mInnerLayout;
 
-	protected final ImageView mHeaderImage;
+	//protected final ImageView mHeaderImage;
+	protected final SimpleDraweeView mHeaderImage;
 	protected final ProgressBar mHeaderProgress;
 
 	private boolean mUseIntrinsicAnimation;
@@ -81,7 +86,8 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		mHeaderText = (TextView) mInnerLayout.findViewById(R.id.pull_to_refresh_text);
 		mHeaderProgress = (ProgressBar) mInnerLayout.findViewById(R.id.pull_to_refresh_progress);
 		mSubHeaderText = (TextView) mInnerLayout.findViewById(R.id.pull_to_refresh_sub_text);
-		mHeaderImage = (ImageView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
+		//mHeaderImage = (ImageView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
+		mHeaderImage = (SimpleDraweeView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
 
 		LayoutParams lp = (LayoutParams) mInnerLayout.getLayoutParams();
 
@@ -286,11 +292,18 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 
 	public final void setLoadingDrawable(Drawable imageDrawable) {
 		// Set Drawable
-		mHeaderImage.setImageDrawable(imageDrawable);
-		mUseIntrinsicAnimation = (imageDrawable instanceof AnimationDrawable);
-
-		// Now call the callback
-		onLoadingDrawableSet(imageDrawable);
+//		mHeaderImage.setImageDrawable(imageDrawable);
+//		mUseIntrinsicAnimation = (imageDrawable instanceof AnimationDrawable);
+//
+//		// Now call the callback
+//		onLoadingDrawableSet(imageDrawable);
+//		Uri uri = Uri.parse("file:///android_asset/default_ptr_rotate.gif");
+		DraweeController draweeController =
+				Fresco.newDraweeControllerBuilder()
+						.setUri(Uri.parse("res://"+ MainApplication.getInstance().getPackageName()+"/"+R.drawable.default_ptr_rotate))
+						.setAutoPlayAnimations(true) // 设置加载图片完成后是否直接进行播放
+						.build();
+		mHeaderImage.setController(draweeController);
 	}
 
 	public void setPullLabel(CharSequence pullLabel) {

@@ -4,10 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <View
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+
 
     <com.ezworking.wechatunlock.ui.view.PullToRefreshListView
         android:id="@+id/pull_to_refresh"

@@ -28,7 +28,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.facebook.fresco:fresco:0.13.0'
+    compile 'com.facebook.fresco:fresco:0.8.0'
     compile 'com.google.code.gson:gson:2.7'
     // compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.dou361.statusbar:jjdxm-statusbar:1.0.0'

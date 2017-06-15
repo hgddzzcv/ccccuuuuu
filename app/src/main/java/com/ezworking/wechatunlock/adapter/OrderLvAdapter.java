@@ -3,7 +3,6 @@ package com.ezworking.wechatunlock.adapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -87,6 +86,7 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
             case STATE_LOST_EFFORT:
                 holder.stateButton.setBackgroundResource(R.drawable.btn_default_bg);
                 holder.stateButton.setText(context.getResources().getString(R.string.lose_effort));
+                holder.stateButton.setEnabled(false);
                 holder.stateButton.setClickable(false);
                 break;
 
@@ -98,12 +98,14 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
 
             case STATE_ACCEPT:
                 holder.stateButton.setClickable(false);
+                holder.stateButton.setEnabled(false);
                 holder.stateButton.setBackgroundResource(R.drawable.btn_default_bg);
                 holder.stateButton.setText(context.getResources().getString(R.string.accept));
                 break;
 
             case STATE_REFUSE:
                 holder.stateButton.setClickable(false);
+                holder.stateButton.setEnabled(false);
                 holder.stateButton.setBackgroundResource(R.drawable.btn_default_bg);
                 holder.stateButton.setText(context.getResources().getString(R.string.refuse));
                 break;
@@ -168,6 +170,7 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
                 dialog = customBuilder.create();
                 dialog.show();
                 holder.stateButton.setClickable(false);
+                holder.stateButton.setEnabled(false);
                 notifyDataSetChanged();
                 break;
         }
@@ -213,6 +216,7 @@ public class OrderLvAdapter<T> extends BaseAdapter implements View.OnClickListen
                             }
                         }
                         notifyDataSetChanged();
+
 
                     } catch (Exception e) {
                         e.printStackTrace();

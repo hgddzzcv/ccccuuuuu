@@ -17,11 +17,9 @@ package com.ezworking.wechatunlock.ui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.ImageView.ScaleType;
 
 import com.ezworking.wechatunlock.R;
 
@@ -31,7 +29,7 @@ public class RotateLoadingLayout extends LoadingLayout {
 	static final int ROTATION_ANIMATION_DURATION = 1200;
 
 	private final Animation mRotateAnimation;
-	private final Matrix mHeaderImageMatrix;
+	//private final Matrix mHeaderImageMatrix;
 
 	private float mRotationPivotX, mRotationPivotY;
 
@@ -41,10 +39,10 @@ public class RotateLoadingLayout extends LoadingLayout {
 		super(context, mode, scrollDirection, attrs);
 
 		mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);
-
-		mHeaderImage.setScaleType(ScaleType.MATRIX);
-		mHeaderImageMatrix = new Matrix();
-		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+//
+//		mHeaderImage.setScaleType(ScaleType.MATRIX);
+//		mHeaderImageMatrix = new Matrix();
+//		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 
 		mRotateAnimation = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
@@ -69,26 +67,27 @@ public class RotateLoadingLayout extends LoadingLayout {
 			angle = Math.max(0f, Math.min(180f, scaleOfLayout * 360f - 180f));
 		}
 
-		mHeaderImageMatrix.setRotate(angle, mRotationPivotX, mRotationPivotY);
-		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+		//mHeaderImageMatrix.setRotate(angle, mRotationPivotX, mRotationPivotY);
+		//mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 	}
 
 	@Override
 	protected void refreshingImpl() {
-		mHeaderImage.startAnimation(mRotateAnimation);
+
+		//mHeaderImage.startAnimation(mRotateAnimation);
 	}
 
 	@Override
 	protected void resetImpl() {
-		mHeaderImage.clearAnimation();
+		//mHeaderImage.clearAnimation();
 		resetImageRotation();
 	}
 
 	private void resetImageRotation() {
-		if (null != mHeaderImageMatrix) {
-			mHeaderImageMatrix.reset();
-			mHeaderImage.setImageMatrix(mHeaderImageMatrix);
-		}
+//		if (null != mHeaderImageMatrix) {
+//			mHeaderImageMatrix.reset();
+//			//mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+//		}
 	}
 
 	@Override

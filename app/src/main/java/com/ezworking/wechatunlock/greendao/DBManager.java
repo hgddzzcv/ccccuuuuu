@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.ezworking.wechatunlock.domain.ContactResult;
+import com.ezworking.wechatunlock.domain.ContactResultDao;
+import com.ezworking.wechatunlock.domain.DaoMaster;
+import com.ezworking.wechatunlock.domain.DaoSession;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -72,7 +75,17 @@ public class DBManager {
         DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
         DaoSession daoSession = daoMaster.newSession();
         ContactResultDao userDao = daoSession.getContactResultDao();
-        userDao.insertOrReplace(contactResult);
+        userDao.insert(contactResult);
+    }
+
+    /**
+     * 插入一组信息
+     */
+    public void insertContactsInfo(List<ContactResult> contactResult) {
+        DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        ContactResultDao goodsInfoDao = daoSession.getContactResultDao();
+        goodsInfoDao.insertOrReplaceInTx(contactResult);
     }
 
 
@@ -123,8 +136,22 @@ public class DBManager {
         DaoSession daoSession = daoMaster.newSession();
         ContactResultDao userDao = daoSession.getContactResultDao();
         QueryBuilder<ContactResult> qb = userDao.queryBuilder();
-        qb.where(ContactResultDao.Properties.Identifier.gt(identifier)).orderAsc(ContactResultDao.Properties.Identifier);
+        qb.where(ContactResultDao.Properties.Identifier.eq(identifier));
         List<ContactResult> list = qb.list();
         return list;
+    }
+
+    /**
+     * 查询扫描的所有商品信息
+     *
+     * @return
+     */
+    public List<ContactResult> queryScanGoodsInfo(String identifier) {
+        DaoMaster daoMaster = new DaoMaster(getWritableDatabase());
+        DaoSession daoSession = daoMaster.newSession();
+        ContactResultDao userDao = daoSession.getContactResultDao();
+        QueryBuilder<ContactResult> queryBuilder = userDao.queryBuilder()
+                .where(ContactResultDao.Properties.Identifier.eq(identifier));
+        return queryBuilder.list();
     }
 }

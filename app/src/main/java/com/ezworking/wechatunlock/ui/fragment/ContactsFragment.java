@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ezworking.my_android.base.BaseFragment;
 import com.ezworking.my_android.base.utils.AsyncHttpClientUtil;
@@ -46,7 +47,7 @@ public class ContactsFragment extends BaseFragment {
     /**
      * 群组id
      */
-    private static final Long ID_WECHAT_GROUP = 12345l;
+    private static final Long ID_WECHAT_GROUP = 123450l;
 
     @Bind(R.id.lv_contact)
     ListView lvContact;
@@ -54,6 +55,8 @@ public class ContactsFragment extends BaseFragment {
     @Bind(R.id.download_contact)
     Button download;
 
+    @Bind(R.id.head_txt)
+    TextView head;
 
     private LoadingDialog mLoadDialog;
 
@@ -67,16 +70,18 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        head.setVisibility(View.GONE);
         Log.e("token",AppCache.getInstance().getToken());
         adapter = new ContactLvAdapter(getActivity(),contacts);
         lvContact.setAdapter(adapter);
-        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList(AppCache.getInstance().getToken());
-        Log.e("db",contactResults.size() + contactResults.toString());
-        if(contactResults != null && contactResults.size() != 0){
-            contacts.addAll(contactResults);
-            adapter.notifyDataSetChanged();
 
-        }
+        List<ContactResult> contactResults = DBManager.getInstance(getActivity()).queryUserList();
+        Log.e("db",contactResults.size() + contactResults.toString());
+//        if(contactResults != null && contactResults.size() != 0){
+//            contacts.addAll(contactResults);
+//        }
+        contacts.addAll(contactResults);
+        adapter.notifyDataSetChanged();
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +109,7 @@ public class ContactsFragment extends BaseFragment {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
                 try {
                     String response = new String(responseBody, "utf-8");
                     JSONObject json1 = new JSONObject(response);
@@ -113,7 +119,7 @@ public class ContactsFragment extends BaseFragment {
                     JSONArray array1 = new JSONArray(data);
                     Log.e("111","array1" + array1.toString());
 
-
+                    head.setVisibility(View.VISIBLE);
                     showMessageDialog("恭喜您, 本次下载号码"+array1.length()+"个, 获得"+points+"个积分");
 
                     //创建微信解锁群组
@@ -125,13 +131,13 @@ public class ContactsFragment extends BaseFragment {
                             String name = jsonObject1.optString("name");
                             String phone = jsonObject1.optString("phone");
                             String  wechat = jsonObject1.optString("wechat");
-                            String  identifier = jsonObject1.optString("identifier");
                             Log.e("111",name.toString() + phone.toString() + wechat.toString());
                             ContactResult result = new ContactResult();
-                            result.name = name;
-                            result.phone = phone;
-                            result.wechat = wechat;
-                            result.identifier = AppCache.getInstance().getToken();
+                            result.setName(name);
+                            result.setPhone(phone);
+                            result.setWechat(wechat);
+                           // result.setIdentifier(AppCache.getInstance().getToken());
+
                             contacts1.add(result);
 
 
@@ -143,14 +149,16 @@ public class ContactsFragment extends BaseFragment {
                         values1.put(ContactsContract.CommonDataKinds.GroupMembership.MIMETYPE,ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE);
                         getActivity().getContentResolver().insert(ContactsContract.Data.CONTENT_URI, values1);
                         //保存在本地群组
-                            addContactToGroup(id,ID_WECHAT_GROUP);
+                        addContactToGroup(id,ID_WECHAT_GROUP);
 
-                            //保存数据到数据库
-                            DBManager.getInstance(getActivity()).insertContact(result);
+
 
                     }
                     //contacts.clear();
                     contacts.addAll(contacts1);
+                    //保存数据到数据库
+                    DBManager.getInstance(getActivity()).insertContactsInfo(contacts1);
+
                     adapter.notifyDataSetChanged();
 
                 } catch (Exception e) {

@@ -43,6 +43,8 @@ dependencies {
     compile files('src/main/jniLibs/pushservice-5.7.0.95.jar')
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'com.android.support:appcompat-v7:23+'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
 }
 
 apply plugin: 'org.greenrobot.greendao'
