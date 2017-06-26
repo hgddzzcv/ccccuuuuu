@@ -10,6 +10,14 @@ public class UserInfoBean extends ResultBean{
 
     public DataBean data;
 
+    public DataBean getData() {
+        return data;
+    }
+
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
     public static class DataBean {
         public String name;
         public String phone;

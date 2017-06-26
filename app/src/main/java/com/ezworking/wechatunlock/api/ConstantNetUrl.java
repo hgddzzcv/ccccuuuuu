@@ -9,7 +9,7 @@ public class ConstantNetUrl {
 
 
 
-    public static final String BaseUrl = "http://www.ezworking.net/api/";
+    public static final String BaseUrl = "http://u.ezworking.net/api/";
     /**
      * 登录
      */

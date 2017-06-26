@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 
+import com.ezworking.my_android.base.utils.SharePreferenceUtils;
 import com.ezworking.wechatunlock.domain.ResultBean;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -92,6 +93,9 @@ public class RequestApi {
 
             if(AppCache.getInstance().isUserLogin() && !TextUtils.isEmpty(AppCache.getInstance().getToken())){
                 jsonObject1.put("userToken", AppCache.getInstance().getToken());
+                jsonObject.put("head",jsonObject1);
+            }else if(AppCache.getInstance().isUserLogin() && TextUtils.isEmpty(AppCache.getInstance().getToken())){
+                jsonObject1.put("userToken", SharePreferenceUtils.getValueFromSP(context,"userToken",""));
                 jsonObject.put("head",jsonObject1);
             }
             Log.e("111",jsonObject.toString());

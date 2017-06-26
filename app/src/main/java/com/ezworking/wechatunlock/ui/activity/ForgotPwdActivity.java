@@ -364,4 +364,12 @@ public class ForgotPwdActivity extends AppBaseActivity {
         commonActionBar.setImgLeftViewVisibility(View.VISIBLE);
         commonActionBar.setimgRightViewVisibility(View.GONE);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer!=null){
+            timer.cancel();
+        }
+    }
 }

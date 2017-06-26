@@ -21,6 +21,7 @@ import com.ezworking.my_android.base.utils.CommonActionBar;
 import com.ezworking.my_android.base.utils.LogUtil;
 import com.ezworking.my_android.base.utils.MD5;
 import com.ezworking.my_android.base.utils.PageJumps;
+import com.ezworking.my_android.base.utils.SharePreferenceUtils;
 import com.ezworking.my_android.base.utils.SzSign;
 import com.ezworking.my_android.base.utils.ToastUtil;
 import com.ezworking.my_android.base.view.LoadingDialog;
@@ -99,7 +100,6 @@ public class RegisterActivity extends AppBaseActivity {
 
     private ResultBean resultbean;
     private RegsiterInfoBean regsiterInfoBean;
-    private ResultBean result;
 
 
     @Override
@@ -292,7 +292,6 @@ public class RegisterActivity extends AppBaseActivity {
                         resultbean = new Gson().fromJson(response, ResultBean.class);
                         if (resultbean.success.equals("0")) {
                             ToastUtil.showToast(aty, resultbean.getErrorMsg());
-                            LogUtil.e("getVerifyCodeByPhoneNumber---------"+resultbean.toString());
                             return;
                         }
                         LogUtil.e("getVerifyCodeByPhoneNumber---------"+resultbean.success);
@@ -359,15 +358,15 @@ public class RegisterActivity extends AppBaseActivity {
                     String response = null;
                     try {
                         response = new String(responseBody, "utf-8");
+                        LogUtil.e("response----------"+response);
                         try{
                              regsiterInfoBean = new Gson().fromJson(response, RegsiterInfoBean.class);
                         }catch (Exception e){
-                            result =  new Gson().fromJson(response,ResultBean.class);
+                            resultbean =  new Gson().fromJson(response,ResultBean.class);
                             //deal wrong
-                            ToastUtil.showToast(aty, result.getErrorMsg());
+                            ToastUtil.showToast(aty, resultbean.getErrorMsg());
                             return;
                         }
-                        LogUtil.e(regsiterInfoBean.success+"2");
                         if (regsiterInfoBean.success.equals("0")) {
                             ToastUtil.showToast(aty, regsiterInfoBean.getErrorMsg());
                             return;
@@ -375,18 +374,11 @@ public class RegisterActivity extends AppBaseActivity {
 
 
                         //注册成功
-                        ToastUtil.showToast(aty, "注册成功");
-                        UserInfoBean userInfoBean = new UserInfoBean();
-                        userInfoBean.data.setUserToken(regsiterInfoBean.getUserToken());
-                        userInfoBean.data.setName(Nick);
-                        userInfoBean.data.setPhone(phoneNum);
-                        userInfoBean.data.setQq(QQ);
-                        userInfoBean.data.setWechat(weChat);
-                        userInfoBean.data.setPoints("");
-                        AppCache.getInstance().saveUserInfo(userInfoBean);
+                        LogUtil.e("注册成功");
+                        String userToken = regsiterInfoBean.getUserToken();
+                        SharePreferenceUtils.putValueToSP(aty,"userToken",userToken);
                         AppCache.getInstance().setUserLogin(true);
-                        AppCache.getInstance().setPassword(pwd);
-                        LogUtil.e("跳到main");
+                        ToastUtil.showToast(aty, "注册成功");
                         PageJumps.PageJumps(aty,MainActivity.class,null);
                         finish();
 
@@ -436,5 +428,13 @@ public class RegisterActivity extends AppBaseActivity {
                 = commonActionBar.getTitleView();
         commonActionBar.setImgLeftViewVisibility(View.VISIBLE);
         commonActionBar.setimgRightViewVisibility(View.GONE);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer!=null){
+            timer.cancel();
+        }
     }
 }
